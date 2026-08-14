@@ -18,6 +18,8 @@ from dotenv import load_dotenv
 
 load_dotenv(override=True)
 
+#gunicorn -k uvicorn.workers.UvicornWorker -w 1 --bind 127.0.0.1:5000 app_factory:web_app._sio_app
+
 def get_client_ip():
     x_forwarded_for = request.headers.get("X-Forwarded-For")
     if x_forwarded_for:
