@@ -11,6 +11,13 @@ from quart_auth import Unauthorized
 from helpers.db_helper import Base, engine
 from helpers.blueprint_registration import register_all_blueprints
 
+import os
+
+from dotenv import load_dotenv
+load_dotenv(override=True)
+
+Host=os.getenv("Host", "").strip()
+
     
 @web_app.before_serving
 async def startup():
@@ -55,4 +62,4 @@ if __name__ == '__main__':
 
     #asyncio.run(hypercorn.asyncio.serve(app, config))
     
-    web_app.run("localhost", 5000)
+    web_app.run(Host, 5000)

@@ -64,7 +64,9 @@ class WebApp():
                 app=self._sio_app,
                 host=host,
                 port=port,
-                reload=True
+                reload=False,
+                workers=4,
+                log_level="info"
             )
             server = uvicorn.Server(config=uvconfig)
             await server.serve()
