@@ -1,0 +1,1809 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Projects · Portfolio</title>
+  <!-- Google Font & Material Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
+  <!-- CKEditor 5 CDN -->
+  <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
+  <style>
+    /* ===== CSS VARIABLES MATCHED TO DASHBOARD.HTML ===== */
+    :root {
+      --primary: #65A30D;
+      --primary-dark: #4D7C0F;
+      --primary-light: #84CC16;
+      --primary-gradient: linear-gradient(135deg, #84CC16, #65A30D);
+      --primary-bg: rgba(101, 163, 13, 0.08);
+      
+      --bg-main: #F8FAFC;
+      --bg-surface: #FFFFFF;
+      --bg-card: #FFFFFF;
+      
+      --text-primary: #0F172A;
+      --text-secondary: #475569;
+      --text-muted: #94A3B8;
+      --border-color: #E2E8F0;
+      --border-light: #F1F5F9;
+      
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.03);
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.025);
+      --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 10px 10px -5px rgba(0, 0, 0, 0.03);
+      
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-xl: 24px;
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg-main);
+      color: var(--text-primary);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding: 1.5rem;
+    }
+
+    .projects-container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      background: var(--bg-surface);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-color);
+      box-shadow: var(--shadow-sm);
+      padding: 2rem;
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .projects-container:hover {
+      box-shadow: var(--shadow-md);
+    }
+
+    /* ===== HEADER ===== */
+    .projects-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 1.25rem;
+      gap: 1rem;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .brand-icon {
+      width: 42px;
+      height: 42px;
+      background: var(--primary-gradient);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #FFFFFF;
+      font-size: 1.4rem;
+      box-shadow: 0 4px 12px rgba(101, 163, 13, 0.25);
+      flex-shrink: 0;
+    }
+
+    .brand h1 {
+      font-size: 1.3rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--text-primary);
+    }
+
+    .project-title-display {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--primary-dark);
+      background: var(--primary-bg);
+      padding: 0.4rem 1rem;
+      border-radius: 20px;
+      border: 1px solid rgba(101, 163, 13, 0.2);
+    }
+
+    /* ===== SECTIONS ===== */
+    .project-content {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .project-section {
+      background: var(--bg-surface);
+      border-radius: var(--radius-md);
+      padding: 1.5rem;
+      border: 1px solid var(--border-color);
+    }
+
+    .project-section-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .project-section-title .material-icons-round {
+      color: var(--primary);
+      font-size: 1.3rem;
+    }
+
+    .project-section-content {
+      color: var(--text-secondary);
+      line-height: 1.7;
+      font-size: 0.95rem;
+    }
+
+    .project-section-content img {
+      max-width: 100%;
+      height: auto;
+      border-radius: var(--radius-sm);
+    }
+
+    .project-section-content ul,
+    .project-section-content ol {
+      padding-left: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .project-section-content p {
+      margin-bottom: 0.8rem;
+    }
+
+    /* ===== FILES GRID ===== */
+    .files-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 1rem;
+    }
+
+    .file-item {
+      background: var(--bg-main);
+      border-radius: var(--radius-md);
+      padding: 0.75rem;
+      text-align: center;
+      border: 1px solid var(--border-color);
+      transition: var(--transition);
+      position: relative;
+      cursor: pointer;
+    }
+
+    .file-item:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .file-item .file-preview {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      overflow: hidden;
+      border-radius: var(--radius-sm);
+      background: var(--bg-surface);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .file-item .file-preview img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .file-item .file-preview video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .file-item .file-preview .file-icon {
+      font-size: 3rem;
+      color: var(--text-muted);
+    }
+
+    .file-item .file-preview .file-type-badge {
+      position: absolute;
+      bottom: 4px;
+      right: 4px;
+      background: rgba(0,0,0,0.7);
+      color: white;
+      font-size: 0.55rem;
+      padding: 0.1rem 0.4rem;
+      border-radius: 4px;
+      text-transform: uppercase;
+    }
+
+    .file-item .file-name {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      font-weight: 500;
+      margin-top: 0.4rem;
+      word-break: break-all;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .file-item .file-actions {
+      margin-top: 0.4rem;
+    }
+
+    .file-item .btn-delete-file {
+      display: flex;
+      align-items: center;
+      gap: 0.2rem;
+      padding: 0.2rem 0.6rem;
+      background: #FEF2F2;
+      color: #DC2626;
+      border: 1px solid rgba(220, 38, 38, 0.2);
+      border-radius: 20px;
+      font-size: 0.65rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      font-family: var(--font);
+      margin: 0 auto;
+    }
+
+    .file-item .btn-delete-file:hover {
+      background: #FEE2E2;
+    }
+
+    .file-item .btn-delete-file:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    /* ===== DROP ZONE ===== */
+    .drop-zone {
+      border: 2px dashed var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 2rem 1.5rem;
+      text-align: center;
+      cursor: pointer;
+      transition: var(--transition);
+      background: var(--bg-main);
+      position: relative;
+      margin-top: 1.2rem;
+    }
+
+    .drop-zone:hover {
+      border-color: var(--primary);
+      background: var(--primary-bg);
+    }
+
+    .drop-zone.dragover {
+      border-color: var(--primary);
+      background: var(--primary-bg);
+      transform: scale(1.005);
+    }
+
+    .drop-zone .drop-zone-icon {
+      font-size: 2.8rem;
+      color: var(--text-muted);
+      transition: var(--transition);
+      margin-bottom: 0.5rem;
+    }
+
+    .drop-zone:hover .drop-zone-icon {
+      color: var(--primary);
+    }
+
+    .drop-zone .drop-zone-text {
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.2rem;
+      font-size: 0.95rem;
+    }
+
+    .drop-zone .drop-zone-subtext {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .drop-zone .drop-zone-browse {
+      display: inline-block;
+      margin-top: 0.8rem;
+      padding: 0.4rem 1.2rem;
+      background: var(--primary-gradient);
+      color: white;
+      border-radius: var(--radius-md);
+      font-weight: 600;
+      font-size: 0.85rem;
+      box-shadow: 0 4px 12px rgba(101, 163, 13, 0.25);
+      transition: var(--transition);
+    }
+
+    .drop-zone .drop-zone-browse:hover {
+      box-shadow: 0 6px 16px rgba(101, 163, 13, 0.35);
+    }
+
+    .drop-zone .drop-zone-input {
+      display: none;
+    }
+
+    /* ===== BUTTONS ===== */
+    .btn-action {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.6rem 1.2rem;
+      border-radius: var(--radius-md);
+      font-weight: 600;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: var(--transition);
+      font-family: var(--font);
+      border: none;
+    }
+
+    .btn-primary {
+      background: var(--primary-gradient);
+      color: #FFFFFF;
+      box-shadow: 0 4px 12px rgba(101, 163, 13, 0.25);
+    }
+
+    .btn-primary:hover {
+      box-shadow: 0 6px 16px rgba(101, 163, 13, 0.35);
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      background: var(--bg-main);
+      color: var(--text-secondary);
+      border: 1px solid var(--border-color);
+    }
+
+    .btn-secondary:hover {
+      background: var(--primary-bg);
+      color: var(--primary);
+      border-color: rgba(101, 163, 13, 0.3);
+    }
+
+    .btn-danger {
+      background: #FEF2F2;
+      color: #DC2626;
+      border: 1px solid rgba(220, 38, 38, 0.2);
+    }
+
+    .btn-danger:hover {
+      background: #FEE2E2;
+    }
+
+    /* ===== UPLOAD QUEUE ===== */
+    .upload-queue {
+      margin-top: 1rem;
+      display: none;
+    }
+
+    .upload-queue.active {
+      display: block;
+    }
+
+    .upload-queue .queue-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.8rem;
+    }
+
+    .upload-queue .queue-title {
+      font-weight: 600;
+      color: var(--text-primary);
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .upload-queue .queue-title .material-icons-round {
+      font-size: 1.2rem;
+      color: var(--primary);
+    }
+
+    .upload-queue .queue-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .queue-items {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+
+    .queue-item {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      padding: 0.6rem 0.8rem;
+      background: var(--bg-main);
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-color);
+    }
+
+    .queue-item .queue-item-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .queue-item .queue-item-name {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text-primary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .queue-item .queue-item-size {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+    }
+
+    .queue-item .queue-item-progress {
+      width: 60px;
+      height: 4px;
+      background: var(--border-color);
+      border-radius: 10px;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .queue-item .queue-item-progress .progress-bar {
+      height: 100%;
+      background: var(--primary);
+      transition: width 0.3s ease;
+      width: 0%;
+    }
+
+    .queue-item .queue-item-status {
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .queue-item .queue-item-status.pending { color: var(--text-muted); }
+    .queue-item .queue-item-status.uploading { color: var(--primary); }
+    .queue-item .queue-item-status.success { color: var(--primary-dark); }
+    .queue-item .queue-item-status.error { color: #DC2626; }
+
+    /* ===== EMPTY / LOADING STATES ===== */
+    .empty-state, .loading-state {
+      text-align: center;
+      padding: 3rem 1.5rem;
+      color: var(--text-muted);
+    }
+
+    .empty-state .material-icons-round,
+    .loading-state .material-icons-round {
+      font-size: 3rem;
+      color: var(--text-muted);
+      margin-bottom: 0.8rem;
+    }
+
+    .loading-state .material-icons-round {
+      animation: spin 1s linear infinite;
+      color: var(--primary);
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* ===== STATUS BAR ===== */
+    .status-bar {
+      border-top: 1px solid var(--border-color);
+      padding-top: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+
+    .status-bar .status {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .status-bar .status .material-icons-round {
+      font-size: 1.1rem;
+    }
+
+    /* ===== FILE PREVIEW OVERLAY ===== */
+    .file-preview-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      z-index: 3000;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .file-preview-overlay.active {
+      display: flex;
+    }
+
+    .file-preview-content {
+      max-width: 90%;
+      max-height: 90%;
+      background: white;
+      border-radius: var(--radius-lg);
+      padding: 1rem;
+      position: relative;
+      overflow: auto;
+    }
+
+    .file-preview-content img,
+    .file-preview-content video {
+      max-width: 100%;
+      max-height: 80vh;
+      display: block;
+    }
+
+    .file-preview-content iframe {
+      width: 100%;
+      height: 80vh;
+      border: none;
+    }
+
+    .file-preview-close {
+      position: absolute;
+      top: -2rem;
+      right: -2rem;
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      color: white;
+      font-size: 2rem;
+      cursor: pointer;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+    }
+
+    .file-preview-close:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: rotate(90deg);
+    }
+
+    .file-preview-loading {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 200px;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .file-preview-loading .material-icons-round {
+      font-size: 3rem;
+      color: var(--primary);
+      animation: spin 1s linear infinite;
+    }
+
+    .file-preview-error {
+      color: #DC2626;
+      text-align: center;
+      padding: 2rem;
+    }
+
+    /* ===== MODAL STYLING ===== */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.4);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-xl);
+      width: 100%;
+      max-width: 780px;
+      padding: 2.5rem;
+      position: relative;
+      max-height: 92vh;
+      overflow-y: auto;
+      color: var(--text-primary);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      background: var(--bg-main);
+      border: 1px solid var(--border-color);
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      font-size: 1.2rem;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-close:hover {
+      background: rgba(239, 68, 68, 0.1);
+      color: #DC2626;
+      transform: rotate(90deg);
+    }
+
+    .modal-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 0.25rem;
+    }
+
+    .modal-subtitle {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      margin-bottom: 1.8rem;
+    }
+
+    .modal-form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .modal-form-group label {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 600;
+      font-size: 0.85rem;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .modal-form-group label .material-icons-round {
+      font-size: 1.1rem;
+      color: var(--primary);
+    }
+
+    .modal-input {
+      width: 100%;
+      padding: 0.85rem 1.2rem;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      font-size: 0.95rem;
+      font-family: var(--font);
+      color: var(--text-primary);
+      background: var(--bg-surface);
+      transition: var(--transition);
+    }
+
+    .modal-input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(101, 163, 13, 0.15);
+    }
+
+    .ckeditor-container {
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+      transition: var(--transition);
+      background: var(--bg-surface);
+    }
+
+    .ckeditor-container:focus-within {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(101, 163, 13, 0.15);
+    }
+
+    .ckeditor-container .ck-editor__editable {
+      min-height: 120px;
+      max-height: 260px;
+      background: var(--bg-surface) !important;
+      color: var(--text-primary) !important;
+    }
+
+    .ckeditor-container .ck-toolbar {
+      border: none !important;
+      border-bottom: 1px solid var(--border-color) !important;
+      background: var(--bg-main) !important;
+    }
+
+    .btn-modal-submit {
+      width: 100%;
+      padding: 0.9rem;
+      background: var(--primary-gradient);
+      border: none;
+      border-radius: var(--radius-md);
+      font-weight: 700;
+      font-size: 1rem;
+      color: #FFFFFF;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      transition: var(--transition);
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(101, 163, 13, 0.25);
+      font-family: var(--font);
+      margin-top: 0.5rem;
+    }
+
+    .btn-modal-submit:hover:not(:disabled) {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(101, 163, 13, 0.35);
+    }
+
+    .btn-modal-submit:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+
+    .btn-modal-submit.loading .btn-text { display: none; }
+    .btn-modal-submit.loading .spinner { display: inline-block; }
+
+    .spinner {
+      display: none;
+      width: 1.2rem;
+      height: 1.2rem;
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      border-top: 3px solid #FFFFFF;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+
+    .message-box {
+      margin-top: 1.2rem;
+      padding: 0.9rem 1rem;
+      border-radius: var(--radius-md);
+      font-weight: 500;
+      font-size: 0.9rem;
+      display: none;
+      align-items: center;
+      gap: 0.6rem;
+      border-left: 4px solid;
+    }
+
+    .message-box.error {
+      display: flex;
+      border-left-color: #DC2626;
+      background: #FEF2F2;
+      color: #991B1B;
+    }
+
+    .message-box.success {
+      display: flex;
+      border-left-color: var(--primary);
+      background: #F7FEE7;
+      color: var(--primary-dark);
+    }
+
+    .message-box.hidden { display: none !important; }
+
+    @media (max-width: 640px) {
+      body { padding: 0.8rem; }
+      .projects-container { padding: 1.2rem; }
+      .modal-content { padding: 1.5rem; }
+      .files-grid { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); }
+      .file-preview-content { max-width: 95%; }
+      .file-preview-close { top: 0; right: 0; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="projects-container">
+  <!-- Header -->
+  <div class="projects-header">
+    <div class="brand">
+      <div class="brand-icon">
+        <span class="material-icons-round">folder_open</span>
+      </div>
+      <h1>Project Details</h1>
+    </div>
+    <div class="header-actions">
+      <span class="project-title-display" id="projectTitleDisplay">Loading...</span>
+    </div>
+  </div>
+
+  <!-- Project Content -->
+  <div class="project-content" id="projectContent">
+    <div class="loading-state">
+      <span class="material-icons-round">hourglass_top</span>
+      <p>Loading project details...</p>
+    </div>
+  </div>
+
+  <!-- Status Bar -->
+  <div class="status-bar">
+    <div class="status">
+      <span class="material-icons-round" id="statusIcon">info</span>
+      <span id="statusText">Loading project...</span>
+    </div>
+  </div>
+</div>
+
+<!-- ========== FILE PREVIEW OVERLAY ========== -->
+<div class="file-preview-overlay" id="filePreviewOverlay">
+  <div class="file-preview-content" id="filePreviewContent">
+    <button class="file-preview-close" id="filePreviewClose">
+      <span class="material-icons-round">close</span>
+    </button>
+    <div id="filePreviewBody">
+      <div class="file-preview-loading">
+        <span class="material-icons-round">hourglass_top</span>
+        <span>Loading file...</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== EDIT PROJECT MODAL ========== -->
+<div class="modal-overlay" id="editModal">
+  <div class="modal-content">
+    <button class="modal-close" id="closeEditModal" aria-label="Close modal">
+      <span class="material-icons-round">close</span>
+    </button>
+
+    <h2 class="modal-title">Edit Project</h2>
+    <p class="modal-subtitle">Update your project information</p>
+
+    <form id="editProjectForm" novalidate>
+      <input type="hidden" id="editProjectId" name="project_id_" value="" />
+      
+      <div class="modal-form-group">
+        <label for="editProjectTitle">
+          <span class="material-icons-round">title</span>
+          Project Title
+        </label>
+        <input 
+          type="text" 
+          id="editProjectTitle" 
+          name="project_title"
+          class="modal-input" 
+          placeholder="e.g., E-commerce Website"
+          required
+        />
+      </div>
+
+      <div class="modal-form-group">
+        <label for="editObjectivesEditor">
+          <span class="material-icons-round">target</span>
+          Project Objectives
+        </label>
+        <div class="ckeditor-container">
+          <textarea 
+            id="editObjectivesEditor" 
+            name="project_objectives"
+            placeholder="What are the objectives of this project?"
+          ></textarea>
+        </div>
+      </div>
+
+      <div class="modal-form-group">
+        <label for="editDescriptionEditor">
+          <span class="material-icons-round">description</span>
+          Project Description
+        </label>
+        <div class="ckeditor-container">
+          <textarea 
+            id="editDescriptionEditor" 
+            name="project_description"
+            placeholder="Describe your project in detail..."
+          ></textarea>
+        </div>
+      </div>
+
+      <button type="submit" class="btn-modal-submit" id="editSubmitBtn">
+        <span class="btn-text">Update Project</span>
+        <span class="spinner"></span>
+      </button>
+    </form>
+
+    <div id="editMessage" class="message-box hidden">
+      <span class="material-icons-round">info</span>
+      <span id="editMessageText"></span>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function() {
+    'use strict';
+
+    // Get data from template
+    const isAuthenticated = {{ is_authenticated | tojson | safe }};
+    const projectId = {{ project_id | tojson | safe }};
+    
+    // DOM Elements
+    const projectContent = document.getElementById('projectContent');
+    const projectTitleDisplay = document.getElementById('projectTitleDisplay');
+    const statusText = document.getElementById('statusText');
+    const statusIcon = document.getElementById('statusIcon');
+    const filePreviewOverlay = document.getElementById('filePreviewOverlay');
+    const filePreviewClose = document.getElementById('filePreviewClose');
+    const filePreviewBody = document.getElementById('filePreviewBody');
+
+    // State
+    let currentProject = null;
+    let currentFiles = [];
+    let uploadQueue = [];
+    let isUploading = false;
+
+    // CKEditor Instances
+    let editObjectivesEditor = null;
+    let editDescriptionEditor = null;
+
+    // ========== FILE PREVIEW FUNCTIONS ==========
+    function openFilePreview(fileId, fileName, fileType) {
+      filePreviewOverlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+      
+      filePreviewBody.innerHTML = `
+        <div class="file-preview-loading">
+          <span class="material-icons-round">hourglass_top</span>
+          <span>Loading ${fileName}...</span>
+        </div>
+      `;
+
+      // Fetch the file from the database via the view_file endpoint
+      fetch(`/view_file/${fileId}`)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          return response.blob();
+        })
+        .then(blob => {
+          const blobType = blob.type;
+          const url = URL.createObjectURL(blob);
+          
+          let previewHtml = '';
+          
+          if (blobType.startsWith('image/')) {
+            previewHtml = `<img src="${url}" alt="${fileName}" />`;
+          } else if (blobType.startsWith('video/')) {
+            previewHtml = `
+              <video controls autoplay>
+                <source src="${url}" type="${blobType}">
+                Your browser does not support the video tag.
+              </video>
+            `;
+          } else if (blobType === 'application/pdf') {
+            previewHtml = `
+              <iframe src="${url}" title="${fileName}"></iframe>
+            `;
+          } else if (blobType.startsWith('text/') || blobType === 'application/json') {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+              const text = e.target.result;
+              filePreviewBody.innerHTML = `
+                <pre style="white-space: pre-wrap; word-wrap: break-word; max-height: 80vh; overflow: auto; padding: 1rem; background: #f8f9fa; border-radius: 8px; font-family: monospace; font-size: 0.9rem;">${text}</pre>
+              `;
+            };
+            reader.readAsText(blob);
+            return;
+          } else {
+            previewHtml = `
+              <div style="text-align: center; padding: 2rem;">
+                <span class="material-icons-round" style="font-size: 4rem; color: var(--primary);">insert_drive_file</span>
+                <p style="margin: 1rem 0;">This file type cannot be previewed.</p>
+                <a href="${url}" download="${fileName}" class="btn-action btn-primary">
+                  <span class="material-icons-round">download</span>
+                  Download ${fileName}
+                </a>
+              </div>
+            `;
+          }
+          
+          if (previewHtml) {
+            filePreviewBody.innerHTML = previewHtml;
+          }
+        })
+        .catch(error => {
+          console.error('Error loading file:', error);
+          filePreviewBody.innerHTML = `
+            <div class="file-preview-error">
+              <span class="material-icons-round" style="font-size: 3rem;">error</span>
+              <p style="margin-top: 1rem;">Failed to load file: ${error.message}</p>
+            </div>
+          `;
+        });
+    }
+
+    function closeFilePreview() {
+      filePreviewOverlay.classList.remove('active');
+      document.body.style.overflow = '';
+      filePreviewBody.innerHTML = `
+        <div class="file-preview-loading">
+          <span class="material-icons-round">hourglass_top</span>
+          <span>Loading file...</span>
+        </div>
+      `;
+    }
+
+    filePreviewClose.addEventListener('click', closeFilePreview);
+    filePreviewOverlay.addEventListener('click', (e) => {
+      if (e.target === filePreviewOverlay) {
+        closeFilePreview();
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && filePreviewOverlay.classList.contains('active')) {
+        closeFilePreview();
+      }
+    });
+
+    // ========== FETCH PROJECT DETAILS ==========
+    async function fetchProjectDetails() {
+      if (!projectId) {
+        projectContent.innerHTML = `
+          <div class="empty-state">
+            <span class="material-icons-round">error_outline</span>
+            <h3>No Project Selected</h3>
+            <p>Please select a project from the navigation sidebar.</p>
+          </div>
+        `;
+        statusText.textContent = 'No project selected';
+        statusIcon.textContent = 'info';
+        statusIcon.style.color = 'var(--text-muted)';
+        return;
+      }
+
+      try {
+        const response = await fetch(`/project-details/${projectId}`, { method: 'GET' });
+        const data = await response.json();
+
+        if (data.success) {
+          currentProject = data.project_details;
+          currentFiles = data.files || [];
+          
+          renderProject(currentProject, currentFiles);
+          projectTitleDisplay.textContent = currentProject.project_title || 'Untitled Project';
+          statusText.textContent = 'Project loaded successfully';
+          statusIcon.textContent = 'check_circle';
+          statusIcon.style.color = 'var(--primary)';
+        } else {
+          showError(data.message || 'Failed to load project details.');
+        }
+      } catch (error) {
+        console.error('Error fetching project:', error);
+        showError('Network error. Please try again later.');
+      }
+    }
+
+    function showError(msg) {
+      projectContent.innerHTML = `
+        <div class="empty-state">
+          <span class="material-icons-round" style="color: #DC2626;">warning</span>
+          <h3>Error Loading Project</h3>
+          <p>${msg}</p>
+        </div>
+      `;
+      statusText.textContent = 'Error loading project';
+      statusIcon.textContent = 'error';
+      statusIcon.style.color = '#DC2626';
+    }
+
+    // ========== RENDER PROJECT ==========
+    function renderProject(project, files) {
+      let html = '';
+
+      // Description Section
+      html += `
+        <div class="project-section">
+          <div class="project-section-title">
+            <span class="material-icons-round">description</span>
+            Description
+          </div>
+          <div class="project-section-content">
+            ${project.project_description || '<p style="color:var(--text-muted);">No description provided.</p>'}
+          </div>
+        </div>
+      `;
+
+      // Objectives Section
+      html += `
+        <div class="project-section">
+          <div class="project-section-title">
+            <span class="material-icons-round">target</span>
+            Objectives
+          </div>
+          <div class="project-section-content">
+            ${project.project_objectives || '<p style="color:var(--text-muted);">No objectives provided.</p>'}
+          </div>
+        </div>
+      `;
+
+      // Attachments & Upload Section
+      html += `
+        <div class="project-section">
+          <div class="project-section-title" style="justify-content: space-between; flex-wrap: wrap; gap: 0.5rem;">
+            <span style="display: flex; align-items: center; gap: 0.5rem;">
+              <span class="material-icons-round">attach_file</span>
+              Files (${files.length})
+            </span>
+            ${isAuthenticated ? `
+              <button class="btn-action btn-primary" id="uploadFileBtn">
+                <span class="material-icons-round">upload</span>
+                Upload Files
+              </button>
+            ` : ''}
+          </div>
+          <div class="project-section-content">
+            ${files.length > 0 ? renderFiles(files) : '<p style="color:var(--text-muted);">No files attached to this project.</p>'}
+            
+            ${isAuthenticated ? `
+              <div class="drop-zone" id="dropZone">
+                <span class="drop-zone-icon material-icons-round">cloud_upload</span>
+                <div class="drop-zone-text">Drop files here or click to browse</div>
+                <div class="drop-zone-subtext">Maximum file size: 10MB per file</div>
+                <div class="drop-zone-browse">Browse Files</div>
+                <input type="file" class="drop-zone-input" id="dropZoneInput" multiple />
+              </div>
+
+              <div class="upload-queue" id="uploadQueue">
+                <div class="queue-header">
+                  <div class="queue-title">
+                    <span class="material-icons-round">queue</span>
+                    Upload Queue (<span id="queueCount">0</span>)
+                  </div>
+                  <div class="queue-actions">
+                    <button class="btn-action btn-primary" id="uploadAllBtn" style="padding:0.35rem 0.8rem; font-size:0.75rem;">
+                      Upload All
+                    </button>
+                    <button class="btn-action btn-secondary" id="clearQueueBtn" style="padding:0.35rem 0.8rem; font-size:0.75rem;">
+                      Clear
+                    </button>
+                  </div>
+                </div>
+                <div class="queue-items" id="queueItems"></div>
+              </div>
+            ` : ''}
+          </div>
+        </div>
+      `;
+
+      // Project Management Actions
+      if (isAuthenticated) {
+        html += `
+          <div class="project-section" style="background: var(--bg-main);">
+            <div style="display: flex; gap: 0.8rem; flex-wrap: wrap;">
+              <button class="btn-action btn-secondary" id="editProjectBtn">
+                <span class="material-icons-round">edit</span>
+                Edit Project
+              </button>
+              <button class="btn-action btn-danger" id="deleteProjectBtn">
+                <span class="material-icons-round">delete</span>
+                Delete Project
+              </button>
+            </div>
+          </div>
+        `;
+      }
+
+      projectContent.innerHTML = html;
+
+      if (isAuthenticated) {
+        setupDropZone();
+        setupUploadQueue();
+
+        const uploadBtn = document.getElementById('uploadFileBtn');
+        if (uploadBtn) {
+          uploadBtn.addEventListener('click', () => document.getElementById('dropZoneInput').click());
+        }
+
+        const editBtn = document.getElementById('editProjectBtn');
+        if (editBtn) {
+          editBtn.addEventListener('click', () => openEditModal(project));
+        }
+
+        const deleteBtn = document.getElementById('deleteProjectBtn');
+        if (deleteBtn) {
+          deleteBtn.addEventListener('click', () => deleteProject(projectId));
+        }
+      }
+
+      // Attach file click handlers for preview
+      document.querySelectorAll('.file-item').forEach(item => {
+        item.addEventListener('click', function(e) {
+          if (e.target.closest('.btn-delete-file')) return;
+          
+          const fileId = this.dataset.fileId;
+          const fileName = this.dataset.fileName || 'File';
+          const fileType = this.dataset.fileType || '';
+          if (fileId) {
+            openFilePreview(fileId, fileName, fileType);
+          }
+        });
+      });
+
+      // Attach delete file handlers
+      document.querySelectorAll('.btn-delete-file').forEach(btn => {
+        btn.addEventListener('click', handleDeleteFile);
+      });
+    }
+
+    // ========== RENDER FILES GRID WITH PREVIEWS ==========
+    function renderFiles(files) {
+      let html = '<div class="files-grid">';
+      
+      files.forEach((fileData) => {
+        const fileId = fileData.file_id || '';
+        const fileName = fileData.file_url ? fileData.file_url.split('/').pop() : 'File';
+        const fileUrl = fileData.file_url || '';
+        
+        // Determine file extension and type
+        const fileExt = fileName.split('.').pop().toLowerCase();
+        let icon = 'insert_drive_file';
+        let isImage = false;
+        let isVideo = false;
+        let isPreviewable = true;
+        
+        if (['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg', 'bmp', 'ico'].includes(fileExt)) {
+          icon = 'image';
+          isImage = true;
+        } else if (['mp4', 'webm', 'mov', 'avi', 'mkv'].includes(fileExt)) {
+          icon = 'video_file';
+          isVideo = true;
+        } else if (['pdf'].includes(fileExt)) {
+          icon = 'picture_as_pdf';
+        } else if (['doc', 'docx'].includes(fileExt)) {
+          icon = 'description';
+        } else if (['mp3', 'wav', 'ogg', 'flac'].includes(fileExt)) {
+          icon = 'audiotrack';
+        } else if (['zip', 'rar', '7z', 'tar', 'gz'].includes(fileExt)) {
+          icon = 'folder_zip';
+          isPreviewable = false;
+        } else if (['txt', 'log', 'md'].includes(fileExt)) {
+          icon = 'article';
+        } else {
+          isPreviewable = false;
+        }
+
+        // Generate preview thumbnail
+        let previewHtml = '';
+        if (isImage) {
+          // For images, try to load them via the view_file endpoint
+          previewHtml = `
+            <div class="file-preview">
+              <img src="/view_file/${fileId}" alt="${fileName}" loading="lazy" />
+              <span class="file-type-badge">${fileExt}</span>
+            </div>
+          `;
+        } else if (isVideo) {
+          previewHtml = `
+            <div class="file-preview">
+              <video muted>
+                <source src="/view_file/${fileId}" type="video/${fileExt}">
+              </video>
+              <span class="file-type-badge">${fileExt}</span>
+            </div>
+          `;
+        } else {
+          previewHtml = `
+            <div class="file-preview">
+              <span class="file-icon material-icons-round">${icon}</span>
+              <span class="file-type-badge">${fileExt}</span>
+            </div>
+          `;
+        }
+
+        html += `
+          <div class="file-item" 
+               data-file-id="${fileId}" 
+               data-file-name="${fileName}"
+               data-file-type="${fileExt}"
+               style="cursor: ${isPreviewable ? 'pointer' : 'default'};">
+            ${previewHtml}
+            <div class="file-name">${fileName}</div>
+            ${isAuthenticated ? `
+              <div class="file-actions">
+                <button class="btn-delete-file" data-file-id="${fileId}" data-file-url="${fileUrl}">
+                  <span class="material-icons-round">delete</span>
+                  Remove
+                </button>
+              </div>
+            ` : ''}
+          </div>
+        `;
+      });
+      
+      html += '</div>';
+      return html;
+    }
+
+    // ========== DELETE FILE HANDLER ==========
+    async function handleDeleteFile(e) {
+      e.stopPropagation();
+      
+      const btn = e.target.closest('.btn-delete-file');
+      if (!btn) return;
+      
+      const fileId = btn.dataset.fileId;
+      const fileName = btn.closest('.file-item')?.dataset.fileName || 'this file';
+      
+      if (!fileId) {
+        alert('File ID not found. Please refresh and try again.');
+        return;
+      }
+
+      if (!confirm(`Are you sure you want to delete "${fileName}"? This action cannot be undone.`)) {
+        return;
+      }
+
+      btn.disabled = true;
+      btn.innerHTML = '<span class="material-icons-round">hourglass_top</span> Deleting...';
+
+      try {
+        const response = await fetch(`/project/delete-file/${fileId}`, {
+          method: 'GET'
+        });
+
+        const data = await response.json();
+
+        if (response.ok && data.success) {
+          const fileItem = btn.closest('.file-item');
+          if (fileItem) {
+            fileItem.style.transition = 'all 0.3s ease';
+            fileItem.style.opacity = '0';
+            fileItem.style.transform = 'scale(0.8)';
+            setTimeout(() => {
+              fileItem.remove();
+              updateFileCount();
+            }, 300);
+          }
+
+          statusText.textContent = 'File deleted successfully';
+          statusIcon.textContent = 'check_circle';
+          statusIcon.style.color = 'var(--primary)';
+          
+          setTimeout(() => {
+            statusText.textContent = 'Project loaded successfully';
+            statusIcon.textContent = 'check_circle';
+            statusIcon.style.color = 'var(--primary)';
+          }, 3000);
+        } else {
+          alert(data.message || 'Failed to delete file.');
+          btn.disabled = false;
+          btn.innerHTML = `
+            <span class="material-icons-round">delete</span>
+            Remove
+          `;
+        }
+      } catch (error) {
+        console.error('Delete error:', error);
+        alert('Network error while deleting file.');
+        btn.disabled = false;
+        btn.innerHTML = `
+          <span class="material-icons-round">delete</span>
+          Remove
+        `;
+      }
+    }
+
+    function updateFileCount() {
+      const currentFiles = document.querySelectorAll('.file-item').length;
+      const fileCountEl = document.querySelector('.project-section-title span');
+      if (fileCountEl) {
+        fileCountEl.textContent = `Files (${currentFiles})`;
+      }
+      if (currentFiles === 0) {
+        const section = document.querySelector('.project-section:last-child .project-section-content');
+        if (section) {
+          const emptyMsg = document.createElement('p');
+          emptyMsg.style.color = 'var(--text-muted)';
+          emptyMsg.textContent = 'No files attached to this project.';
+          const dropZone = section.querySelector('.drop-zone');
+          if (dropZone) {
+            section.insertBefore(emptyMsg, dropZone);
+          }
+        }
+      }
+    }
+
+    // ========== SETUP DROP ZONE ==========
+    function setupDropZone() {
+      const dropZone = document.getElementById('dropZone');
+      const dropZoneInput = document.getElementById('dropZoneInput');
+      if (!dropZone || !dropZoneInput) return;
+
+      dropZone.addEventListener('click', (e) => {
+        if (!e.target.closest('.drop-zone-browse') && e.target !== dropZoneInput) {
+          dropZoneInput.click();
+        }
+      });
+
+      dropZone.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        dropZone.classList.add('dragover');
+      });
+
+      dropZone.addEventListener('dragleave', (e) => {
+        e.preventDefault();
+        dropZone.classList.remove('dragover');
+      });
+
+      dropZone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        dropZone.classList.remove('dragover');
+        if (e.dataTransfer.files.length > 0) addFilesToQueue(e.dataTransfer.files);
+      });
+
+      dropZoneInput.addEventListener('change', (e) => {
+        if (e.target.files.length > 0) addFilesToQueue(e.target.files);
+        dropZoneInput.value = '';
+      });
+    }
+
+    // ========== UPLOAD QUEUE MANAGERS ==========
+    function setupUploadQueue() {
+      const uploadAllBtn = document.getElementById('uploadAllBtn');
+      const clearQueueBtn = document.getElementById('clearQueueBtn');
+      if (uploadAllBtn) uploadAllBtn.addEventListener('click', uploadAllFiles);
+      if (clearQueueBtn) clearQueueBtn.addEventListener('click', clearQueue);
+    }
+
+    function addFilesToQueue(fileList) {
+      const validFiles = Array.from(fileList).filter(file => {
+        if (file.size > 10 * 1024 * 1024) {
+          alert(`File "${file.name}" exceeds the maximum 10MB threshold.`);
+          return false;
+        }
+        return true;
+      });
+
+      if (validFiles.length === 0) return;
+
+      const newItems = validFiles.map(file => ({
+        id: Date.now() + '_' + Math.random().toString(36).substring(2, 9),
+        file: file,
+        name: file.name,
+        size: file.size,
+        status: 'pending',
+        progress: 0
+      }));
+
+      uploadQueue = [...uploadQueue, ...newItems];
+      renderQueue();
+      updateQueueCount();
+      document.getElementById('uploadQueue').classList.add('active');
+    }
+
+    function clearQueue() {
+      if (isUploading) return;
+      uploadQueue = uploadQueue.filter(item => item.status === 'success');
+      renderQueue();
+      updateQueueCount();
+      if (uploadQueue.length === 0) {
+        document.getElementById('uploadQueue').classList.remove('active');
+      }
+    }
+
+    function renderQueue() {
+      const container = document.getElementById('queueItems');
+      if (!container) return;
+
+      if (uploadQueue.length === 0) {
+        container.innerHTML = '';
+        return;
+      }
+
+      container.innerHTML = uploadQueue.map(item => `
+        <div class="queue-item">
+          <span class="material-icons-round" style="color:var(--text-muted);">insert_drive_file</span>
+          <div class="queue-item-info">
+            <div class="queue-item-name">${item.name}</div>
+            <div class="queue-item-size">${(item.size / 1024).toFixed(1)} KB</div>
+          </div>
+          <div class="queue-item-progress">
+            <div class="progress-bar" style="width: ${item.progress}%;"></div>
+          </div>
+          <span class="queue-item-status ${item.status}">${item.status}</span>
+        </div>
+      `).join('');
+    }
+
+    function updateQueueCount() {
+      const countEl = document.getElementById('queueCount');
+      if (countEl) {
+        const pending = uploadQueue.filter(item => item.status !== 'success').length;
+        countEl.textContent = pending;
+      }
+    }
+
+    // ========== UPLOAD FILES (Direct to Database) ==========
+    async function uploadAllFiles() {
+      if (isUploading || uploadQueue.length === 0) return;
+      
+      const pendingItems = uploadQueue.filter(item => item.status !== 'success');
+      if (pendingItems.length === 0) {
+        alert('No pending files to upload.');
+        return;
+      }
+
+      isUploading = true;
+      let successCount = 0;
+      let failCount = 0;
+
+      for (const item of pendingItems) {
+        try {
+          item.status = 'uploading';
+          item.progress = 30;
+          renderQueue();
+
+          const formData = new FormData();
+          formData.append('file', item.file);
+
+          const response = await fetch(`/project/upload-file/${projectId}`, {
+            method: 'POST',
+            body: formData
+          });
+
+          const data = await response.json();
+
+          if (response.ok && data.success) {
+            item.status = 'success';
+            item.progress = 100;
+            successCount++;
+          } else {
+            item.status = 'error';
+            item.progress = 0;
+            failCount++;
+          }
+        } catch (error) {
+          console.error('Upload error for', item.name, error);
+          item.status = 'error';
+          item.progress = 0;
+          failCount++;
+        }
+
+        renderQueue();
+        updateQueueCount();
+      }
+
+      isUploading = false;
+
+      let message = `Upload complete: ${successCount} successful`;
+      if (failCount > 0) {
+        message += `, ${failCount} failed`;
+      }
+      statusText.textContent = message;
+      statusIcon.textContent = failCount > 0 ? 'warning' : 'check_circle';
+      statusIcon.style.color = failCount > 0 ? '#F59E0B' : 'var(--primary)';
+
+      if (successCount > 0) {
+        setTimeout(() => {
+          fetchProjectDetails();
+        }, 500);
+      }
+
+      uploadQueue = uploadQueue.filter(item => item.status !== 'success');
+      renderQueue();
+      updateQueueCount();
+
+      if (uploadQueue.length === 0) {
+        document.getElementById('uploadQueue').classList.remove('active');
+      }
+
+      setTimeout(() => {
+        statusText.textContent = 'Project loaded successfully';
+        statusIcon.textContent = 'check_circle';
+        statusIcon.style.color = 'var(--primary)';
+      }, 3000);
+    }
+
+    // ========== EDIT MODAL LOGIC ==========
+    async function initEditEditors(objectives = '', description = '') {
+      try {
+        if (editObjectivesEditor) await editObjectivesEditor.destroy();
+        if (editDescriptionEditor) await editDescriptionEditor.destroy();
+
+        editObjectivesEditor = await ClassicEditor.create(
+          document.getElementById('editObjectivesEditor'), {
+            toolbar: ['heading', '|', 'bold', 'italic', 'underline', '|', 'bulletedList', 'numberedList', '|', 'undo', 'redo'],
+            licenseKey: 'GPL'
+          }
+        );
+        editObjectivesEditor.setData(objectives);
+
+        editDescriptionEditor = await ClassicEditor.create(
+          document.getElementById('editDescriptionEditor'), {
+            toolbar: ['heading', '|', 'bold', 'italic', 'underline', '|', 'bulletedList', 'numberedList', '|', 'undo', 'redo'],
+            licenseKey: 'GPL'
+          }
+        );
+        editDescriptionEditor.setData(description);
+      } catch (error) {
+        console.error('Editor initialization failed:', error);
+      }
+    }
+
+    function openEditModal(project) {
+      const modal = document.getElementById('editModal');
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+
+      document.getElementById('editProjectId').value = projectId;
+      document.getElementById('editProjectTitle').value = project.project_title || '';
+
+      initEditEditors(project.project_objectives || '', project.project_description || '');
+    }
+
+    function closeEditModal() {
+      const modal = document.getElementById('editModal');
+      modal.classList.remove('active');
+      document.body.style.overflow = '';
+      hideEditMessage();
+    }
+
+    document.getElementById('closeEditModal').addEventListener('click', closeEditModal);
+    document.getElementById('editModal').addEventListener('click', (e) => {
+      if (e.target === document.getElementById('editModal')) closeEditModal();
+    });
+
+    function showEditMessage(text, type = 'error') {
+      const msg = document.getElementById('editMessage');
+      const msgText = document.getElementById('editMessageText');
+      msg.className = `message-box ${type}`;
+      msgText.textContent = text;
+      msg.style.display = 'flex';
+    }
+
+    function hideEditMessage() {
+      const msg = document.getElementById('editMessage');
+      msg.className = 'message-box hidden';
+      msg.style.display = 'none';
+    }
+
+    // ========== UPDATE PROJECT FORM ==========
+    document.getElementById('editProjectForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      hideEditMessage();
+
+      const submitBtn = document.getElementById('editSubmitBtn');
+      const encodedProjectId = document.getElementById('editProjectId').value;
+      const title = document.getElementById('editProjectTitle').value.trim();
+      const objectives = editObjectivesEditor ? editObjectivesEditor.getData().trim() : '';
+      const description = editDescriptionEditor ? editDescriptionEditor.getData().trim() : '';
+
+      if (!title) {
+        showEditMessage('Please enter a project title.', 'error');
+        return;
+      }
+
+      if (!objectives || objectives === '<p>&nbsp;</p>' || objectives === '<p><br></p>') {
+        showEditMessage('Please describe the project objectives.', 'error');
+        return;
+      }
+
+      if (!description || description === '<p>&nbsp;</p>' || description === '<p><br></p>') {
+        showEditMessage('Please describe the project.', 'error');
+        return;
+      }
+
+      submitBtn.classList.add('loading');
+      submitBtn.disabled = true;
+
+      const formData = new FormData();
+      formData.append('project_title', title);
+      formData.append('project_objectives', objectives);
+      formData.append('project_description', description);
+
+      try {
+        const response = await fetch(`/update-project/${encodedProjectId}`, {
+          method: 'POST',
+          body: formData
+        });
+
+        const data = await response.json();
+
+        if (response.ok && data.success) {
+          showEditMessage(data.message || 'Project updated successfully!', 'success');
+          
+          setTimeout(() => {
+            closeEditModal();
+            fetchProjectDetails();
+          }, 800);
+        } else {
+          const errorMsg = data.message || 'Failed to update project.';
+          showEditMessage(errorMsg, 'error');
+        }
+      } catch (err) {
+        console.error('Update error:', err);
+        showEditMessage('Network error occurred while updating.', 'error');
+      } finally {
+        submitBtn.classList.remove('loading');
+        submitBtn.disabled = false;
+      }
+    });
+
+    // ========== DELETE PROJECT ==========
+    async function deleteProject(encodedProjectId) {
+      if (!confirm('Are you sure you want to delete this project? This action cannot be undone and will also delete all associated files.')) {
+        return;
+      }
+
+      try {
+        const response = await fetch(`/delete-project/${encodedProjectId}`, {
+          method: 'GET',
+        });
+
+        const data = await response.json();
+
+        if (response.ok && data.success) {
+          statusText.textContent = 'Project deleted successfully';
+          statusIcon.textContent = 'check_circle';
+          statusIcon.style.color = 'var(--primary)';
+          
+          setTimeout(() => {
+            window.location.href = '/';
+          }, 1000);
+        } else {
+          const errorMsg = data.message || 'Failed to delete project.';
+          alert(errorMsg);
+        }
+      } catch (err) {
+        console.error('Delete error:', err);
+        alert('Network error while attempting to delete.');
+      }
+    }
+
+    // ========== INITIALIZE ==========
+    fetchProjectDetails();
+
+    console.log('Projects page ready. isAuthenticated:', isAuthenticated, 'projectId:', projectId);
+  })();
+</script>
+</body>
+</html>

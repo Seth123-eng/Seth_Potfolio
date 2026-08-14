@@ -1,0 +1,1097 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Messages · Portfolio</title>
+  <!-- Google Font & Material Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
+  <style>
+    /* ===== CSS VARIABLES MATCHING DASHBOARD ===== */
+    :root {
+      --primary: #65A30D; /* Vibrant Lime/Green Accent */
+      --primary-dark: #4D7C0F;
+      --primary-light: #84CC16;
+      --primary-gradient: linear-gradient(135deg, #84CC16, #65A30D);
+      --primary-bg: rgba(101, 163, 13, 0.08);
+      
+      --bg-main: #F8FAFC;
+      --bg-surface: #FFFFFF;
+      --bg-card: #FFFFFF;
+      
+      --text-primary: #0F172A;
+      --text-secondary: #475569;
+      --text-muted: #94A3B8;
+      --border-color: #E2E8F0;
+      --border-light: #F1F5F9;
+      
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.03);
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.025);
+      --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 10px 10px -5px rgba(0, 0, 0, 0.03);
+      
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-xl: 24px;
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg-main);
+      color: var(--text-primary);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding: 1.5rem;
+    }
+
+    .messages-container {
+      width: 100%;
+      max-width: 1000px;
+      margin: 0 auto;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
+      padding: 2rem;
+      transition: var(--transition);
+    }
+
+    .messages-container:hover {
+      box-shadow: var(--shadow-md);
+    }
+
+    /* ===== HEADER ===== */
+    .messages-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 2rem;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 1.25rem;
+      gap: 1rem;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .brand-icon {
+      width: 42px;
+      height: 42px;
+      background: var(--primary-gradient);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #FFFFFF;
+      font-size: 1.4rem;
+      box-shadow: 0 4px 12px rgba(101, 163, 13, 0.25);
+      flex-shrink: 0;
+    }
+
+    .brand h1 {
+      font-size: 1.4rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .msg-count-badge {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      background: var(--bg-main);
+      padding: 0.35rem 0.9rem;
+      border-radius: 20px;
+      border: 1px solid var(--border-color);
+    }
+
+    /* ===== MESSAGES LIST ===== */
+    .messages-content {
+      margin: 1rem 0;
+      min-height: 280px;
+    }
+
+    .messages-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .message-item {
+      background: var(--bg-surface);
+      border-radius: var(--radius-md);
+      padding: 1.25rem 1.5rem;
+      border: 1px solid var(--border-color);
+      transition: var(--transition);
+      box-shadow: var(--shadow-sm);
+      animation: fadeUp 0.35s cubic-bezier(0.4, 0, 0.2, 1) both;
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .message-item:hover {
+      border-color: var(--border-color);
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+    }
+
+    .message-item.unread {
+      border-left: 4px solid var(--primary);
+      background: rgba(101, 163, 13, 0.02);
+    }
+
+    .message-item.read {
+      border-left: 4px solid var(--text-muted);
+      opacity: 0.9;
+    }
+
+    .message-item .message-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .message-item .message-meta {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+    }
+
+    .message-item .message-status {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 0.2rem 0.65rem;
+      border-radius: 12px;
+    }
+
+    .message-item .message-status.unread {
+      background: var(--primary-bg);
+      color: var(--primary-dark);
+    }
+
+    .message-item .message-status.read {
+      background: var(--border-light);
+      color: var(--text-secondary);
+    }
+
+    .message-item .message-status.replied {
+      background: #F0FDF4;
+      color: #16A34A;
+    }
+
+    .message-item .message-status .material-icons-round {
+      font-size: 0.9rem;
+    }
+
+    .message-item .message-date {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .message-item .message-content {
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin: 0.6rem 0;
+      word-wrap: break-word;
+      white-space: pre-wrap;
+    }
+
+    .message-item .message-actions {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .message-item .btn-action {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.4rem 0.9rem;
+      border: 1px solid transparent;
+      border-radius: var(--radius-md);
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      font-family: var(--font);
+    }
+
+    .btn-action .material-icons-round {
+      font-size: 1rem;
+    }
+
+    .btn-reply {
+      background: var(--primary-bg);
+      color: var(--primary-dark);
+    }
+
+    .btn-reply:hover {
+      background: var(--primary);
+      color: #FFFFFF;
+      transform: translateY(-1px);
+    }
+
+    .btn-mark-read {
+      background: var(--bg-main);
+      color: var(--text-secondary);
+      border-color: var(--border-color);
+    }
+
+    .btn-mark-read:hover {
+      background: var(--border-light);
+      color: var(--text-primary);
+      transform: translateY(-1px);
+    }
+
+    .btn-delete-msg {
+      background: #FEF2F2;
+      color: #DC2626;
+    }
+
+    .btn-delete-msg:hover {
+      background: #DC2626;
+      color: #FFFFFF;
+      transform: translateY(-1px);
+    }
+
+    .btn-replied {
+      background: #F0FDF4;
+      color: #16A34A;
+      cursor: default;
+      border-color: rgba(22, 163, 74, 0.2);
+    }
+
+    /* Empty & Error States */
+    .empty-state {
+      text-align: center;
+      padding: 4rem 2rem;
+      color: var(--text-muted);
+    }
+
+    .empty-state .material-icons-round {
+      font-size: 3.5rem;
+      color: var(--text-muted);
+      margin-bottom: 0.8rem;
+    }
+
+    .empty-state h3 {
+      color: var(--text-primary);
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+    }
+
+    .empty-state p {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+
+    /* ===== STATUS BAR ===== */
+    .status-bar {
+      margin-top: 2rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+
+    .status-bar .status {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .status-bar .status .material-icons-round {
+      font-size: 1.2rem;
+      color: var(--primary);
+    }
+
+    /* ===== MODALS (Matching Dashboard) ===== */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.4);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      animation: modalFadeIn 0.3s ease;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    @keyframes modalFadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes modalSlideUp {
+      from { 
+        opacity: 0;
+        transform: translateY(20px) scale(0.98);
+      }
+      to { 
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .modal-content {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-xl);
+      width: 100%;
+      max-width: 650px;
+      padding: 2.2rem 2.2rem 2.5rem;
+      position: relative;
+      animation: modalSlideUp 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+      max-height: 90vh;
+      overflow-y: auto;
+      color: var(--text-primary);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 1.2rem;
+      right: 1.2rem;
+      background: var(--bg-main);
+      border: 1px solid var(--border-color);
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      font-size: 1.2rem;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-close:hover {
+      background: rgba(239, 68, 68, 0.1);
+      color: #DC2626;
+      border-color: rgba(239, 68, 68, 0.2);
+      transform: rotate(90deg);
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .modal-header-icon {
+      width: 44px;
+      height: 44px;
+      background: var(--primary-bg);
+      border: 1px solid rgba(101, 163, 13, 0.2);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary);
+      font-size: 1.4rem;
+      flex-shrink: 0;
+    }
+
+    .modal-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .modal-subtitle {
+      color: var(--text-secondary);
+      font-size: 0.88rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .modal-original-msg {
+      background: var(--bg-main);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+      border-left: 4px solid var(--primary);
+      max-height: 140px;
+      overflow-y: auto;
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+
+    .modal-original-msg strong {
+      color: var(--text-primary);
+      display: block;
+      margin-bottom: 0.3rem;
+    }
+
+    .modal-form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .modal-form-group label {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 600;
+      font-size: 0.85rem;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .modal-form-group label .material-icons-round {
+      font-size: 1.1rem;
+      color: var(--primary);
+    }
+
+    .modal-textarea {
+      width: 100%;
+      min-height: 140px;
+      padding: 0.85rem 1.2rem;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      font-size: 0.95rem;
+      font-family: var(--font);
+      color: var(--text-primary);
+      background: var(--bg-surface);
+      transition: var(--transition);
+      resize: vertical;
+    }
+
+    .modal-textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(101, 163, 13, 0.15);
+    }
+
+    .modal-textarea::placeholder {
+      color: var(--text-muted);
+    }
+
+    .btn-modal-submit {
+      width: 100%;
+      padding: 0.9rem;
+      background: var(--primary-gradient);
+      border: none;
+      border-radius: var(--radius-md);
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: #FFFFFF;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      transition: var(--transition);
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(101, 163, 13, 0.25);
+      font-family: var(--font);
+    }
+
+    .btn-modal-submit:hover:not(:disabled) {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(101, 163, 13, 0.35);
+    }
+
+    .btn-modal-submit:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .btn-modal-submit.loading .btn-text {
+      display: none;
+    }
+    
+    .btn-modal-submit.loading .spinner {
+      display: inline-block;
+    }
+
+    .spinner {
+      display: none;
+      width: 1.2rem;
+      height: 1.2rem;
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      border-top: 3px solid #FFFFFF;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .message-box {
+      margin-top: 1.2rem;
+      padding: 0.85rem 1rem;
+      border-radius: var(--radius-md);
+      font-weight: 500;
+      font-size: 0.9rem;
+      display: none;
+      align-items: center;
+      gap: 0.6rem;
+      border-left: 4px solid;
+    }
+
+    .message-box.error {
+      display: flex;
+      border-left-color: #DC2626;
+      background: #FEF2F2;
+      color: #991B1B;
+    }
+
+    .message-box.success {
+      display: flex;
+      border-left-color: var(--primary);
+      background: #F7FEE7;
+      color: var(--primary-dark);
+    }
+
+    .message-box .material-icons-round {
+      font-size: 1.2rem;
+    }
+
+    .message-box.hidden {
+      display: none !important;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 640px) {
+      body {
+        padding: 0.8rem;
+      }
+      .messages-container {
+        padding: 1.2rem;
+        border-radius: var(--radius-md);
+      }
+      .messages-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.8rem;
+      }
+      .header-actions {
+        width: 100%;
+        justify-content: space-between;
+      }
+      .message-item {
+        padding: 1rem;
+      }
+      .message-item .message-header {
+        flex-direction: column;
+      }
+      .message-item .message-actions {
+        flex-direction: column;
+      }
+      .message-item .btn-action {
+        justify-content: center;
+        width: 100%;
+      }
+      .modal-content {
+        padding: 1.5rem 1.2rem;
+        border-radius: var(--radius-lg);
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="messages-container">
+  <!-- Header -->
+  <div class="messages-header">
+    <div class="brand">
+      <div class="brand-icon">
+        <span class="material-icons-round">chat</span>
+      </div>
+      <h1>Messages</h1>
+    </div>
+    <div class="header-actions">
+      <span class="msg-count-badge" id="msgCount">0 messages</span>
+    </div>
+  </div>
+
+  <!-- Messages Content -->
+  <div class="messages-content">
+    <div id="messagesList" class="messages-list">
+      <!-- Messages rendered dynamically -->
+    </div>
+  </div>
+
+  <!-- Status Bar -->
+  <div class="status-bar">
+    <div class="status">
+      <span class="material-icons-round" id="statusIcon">info</span>
+      <span id="statusText">Loading messages...</span>
+    </div>
+  </div>
+</div>
+
+<!-- ========== REPLY MODAL ========== -->
+<div class="modal-overlay" id="replyModal">
+  <div class="modal-content">
+    <button class="modal-close" id="closeReplyModal" aria-label="Close modal">
+      <span class="material-icons-round">close</span>
+    </button>
+
+    <div class="modal-header">
+      <div class="modal-header-icon">
+        <span class="material-icons-round">reply</span>
+      </div>
+      <div>
+        <h2 class="modal-title">Reply to Message</h2>
+      </div>
+    </div>
+    <p class="modal-subtitle">Send a reply directly to the recipient's email address</p>
+
+    <div class="modal-original-msg" id="originalMsgPreview">
+      <strong>Original Message:</strong>
+      <span id="originalMsgContent"></span>
+    </div>
+
+    <form id="replyForm" novalidate>
+      <div class="modal-form-group">
+        <label for="replyContent">
+          <span class="material-icons-round">edit</span>
+          Your Reply
+        </label>
+        <textarea 
+          id="replyContent" 
+          name="reply_content"
+          class="modal-textarea" 
+          placeholder="Type your response here..."
+          required
+        ></textarea>
+      </div>
+
+      <button type="submit" class="btn-modal-submit" id="replySubmitBtn">
+        <span class="btn-text">
+          <span class="material-icons-round" style="font-size:1.1rem; vertical-align:middle;">send</span>
+          Send Reply
+        </span>
+        <span class="spinner"></span>
+      </button>
+    </form>
+
+    <div id="replyMessage" class="message-box hidden">
+      <span class="material-icons-round">info</span>
+      <span id="replyMessageText"></span>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function() {
+    'use strict';
+
+    // ========== STATE ==========
+    let currentMessages = [];
+    let currentReplyMsgId = null;
+    let timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+    // ========== DOM ELEMENTS ==========
+    const messagesList = document.getElementById('messagesList');
+    const statusText = document.getElementById('statusText');
+    const statusIcon = document.getElementById('statusIcon');
+    const msgCount = document.getElementById('msgCount');
+
+    // Reply Modal
+    const replyModal = document.getElementById('replyModal');
+    const closeReplyModalBtn = document.getElementById('closeReplyModal');
+    const originalMsgContent = document.getElementById('originalMsgContent');
+    const replyForm = document.getElementById('replyForm');
+    const replyContent = document.getElementById('replyContent');
+    const replySubmitBtn = document.getElementById('replySubmitBtn');
+    const replyMessage = document.getElementById('replyMessage');
+    const replyMessageText = document.getElementById('replyMessageText');
+
+    // ========== FETCH MESSAGES ==========
+    async function fetchMessages() {
+      try {
+        const response = await fetch('/msgs-fetch', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ time_zone: timeZone }),
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+          if (data.msgs && data.msgs.length > 0) {
+            currentMessages = data.msgs;
+            renderMessages(currentMessages);
+            msgCount.textContent = `${currentMessages.length} messages`;
+            statusText.textContent = `${currentMessages.length} messages found`;
+            statusIcon.textContent = 'chat';
+          } else {
+            showEmptyState();
+            msgCount.textContent = '0 messages';
+            statusText.textContent = 'No messages yet';
+            statusIcon.textContent = 'inbox';
+          }
+        } else {
+          showErrorState(data.message || 'Failed to fetch messages');
+        }
+      } catch (error) {
+        console.error('Error fetching messages:', error);
+        showErrorState('Network error. Please try again.');
+      }
+    }
+
+    // ========== RENDER MESSAGES ==========
+    function renderMessages(messages) {
+      if (!messages || messages.length === 0) {
+        showEmptyState();
+        return;
+      }
+
+      messagesList.innerHTML = '';
+      
+      messages.forEach((msg) => {
+        const item = document.createElement('div');
+        item.className = `message-item ${msg.is_read ? 'read' : 'unread'}`;
+        
+        // Header
+        const header = document.createElement('div');
+        header.className = 'message-header';
+        
+        const meta = document.createElement('div');
+        meta.className = 'message-meta';
+        
+        // Read Status Badge
+        const statusBadge = document.createElement('span');
+        statusBadge.className = `message-status ${msg.is_read ? 'read' : 'unread'}`;
+        statusBadge.innerHTML = `
+          <span class="material-icons-round">${msg.is_read ? 'check_circle' : 'radio_button_unchecked'}</span>
+          ${msg.is_read ? 'Read' : 'Unread'}
+        `;
+        meta.appendChild(statusBadge);
+        
+        // Replied Badge
+        if (msg.message_replied_to) {
+          const repliedBadge = document.createElement('span');
+          repliedBadge.className = 'message-status replied';
+          repliedBadge.innerHTML = `
+            <span class="material-icons-round">reply</span>
+            Replied
+          `;
+          meta.appendChild(repliedBadge);
+        }
+        
+        // Date
+        const dateSpan = document.createElement('span');
+        dateSpan.className = 'message-date';
+        dateSpan.textContent = msg.date_time || 'Unknown date';
+        meta.appendChild(dateSpan);
+        
+        header.appendChild(meta);
+        
+        // Content
+        const content = document.createElement('div');
+        content.className = 'message-content';
+        content.textContent = msg.message_content || 'No content';
+        
+        // Actions
+        const actions = document.createElement('div');
+        actions.className = 'message-actions';
+        
+        // Reply
+        if (!msg.message_replied_to) {
+          const replyBtn = document.createElement('button');
+          replyBtn.className = 'btn-action btn-reply';
+          replyBtn.innerHTML = `
+            <span class="material-icons-round">reply</span>
+            Reply
+          `;
+          replyBtn.addEventListener('click', () => openReplyModal(msg));
+          actions.appendChild(replyBtn);
+        } else {
+          const repliedBtn = document.createElement('button');
+          repliedBtn.className = 'btn-action btn-replied';
+          repliedBtn.innerHTML = `
+            <span class="material-icons-round">check_circle</span>
+            Replied
+          `;
+          actions.appendChild(repliedBtn);
+        }
+        
+        // Mark as Read
+        if (!msg.is_read) {
+          const markReadBtn = document.createElement('button');
+          markReadBtn.className = 'btn-action btn-mark-read';
+          markReadBtn.innerHTML = `
+            <span class="material-icons-round">done_all</span>
+            Mark as Read
+          `;
+          markReadBtn.addEventListener('click', () => markAsRead(msg.msg_id));
+          actions.appendChild(markReadBtn);
+        }
+        
+        // Delete
+        const deleteBtn = document.createElement('button');
+        deleteBtn.className = 'btn-action btn-delete-msg';
+        deleteBtn.innerHTML = `
+          <span class="material-icons-round">delete</span>
+          Delete
+        `;
+        deleteBtn.addEventListener('click', () => deleteMessage(msg.msg_id));
+        actions.appendChild(deleteBtn);
+        
+        item.appendChild(header);
+        item.appendChild(content);
+        item.appendChild(actions);
+        
+        messagesList.appendChild(item);
+      });
+    }
+
+    // ========== EMPTY & ERROR STATES ==========
+    function showEmptyState() {
+      messagesList.innerHTML = `
+        <div class="empty-state">
+          <span class="material-icons-round">inbox</span>
+          <h3>No messages yet</h3>
+          <p>When someone sends you a message, it will appear here.</p>
+        </div>
+      `;
+    }
+
+    function showErrorState(message) {
+      messagesList.innerHTML = `
+        <div class="empty-state">
+          <span class="material-icons-round" style="color:#DC2626;">error</span>
+          <h3 style="color:#DC2626;">Error</h3>
+          <p>${message}</p>
+        </div>
+      `;
+      statusText.textContent = 'Error loading messages';
+      statusIcon.textContent = 'error';
+    }
+
+    // ========== MARK AS READ ==========
+    async function markAsRead(msgId) {
+      if (!confirm('Mark this message as read?')) return;
+      
+      try {
+        const response = await fetch(`/msg/mark-as-read/${msgId}`, {
+          method: 'GET',
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+          await fetchMessages();
+          showTemporaryStatus('Message marked as read', 'success');
+        } else {
+          alert(data.message || 'Failed to mark message as read');
+        }
+      } catch (error) {
+        console.error('Error marking as read:', error);
+        alert('Network error. Please try again.');
+      }
+    }
+
+    // ========== DELETE MESSAGE ==========
+    async function deleteMessage(msgId) {
+      if (!confirm('Are you sure you want to delete this message? This action cannot be undone.')) return;
+      
+      try {
+        const response = await fetch(`/msg/delete/${msgId}`, {
+          method: 'GET',
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+          await fetchMessages();
+          showTemporaryStatus('Message deleted successfully', 'success');
+        } else {
+          alert(data.message || 'Failed to delete message');
+        }
+      } catch (error) {
+        console.error('Error deleting message:', error);
+        alert('Network error. Please try again.');
+      }
+    }
+
+    // ========== REPLY MODAL ==========
+    function openReplyModal(msg) {
+      currentReplyMsgId = msg.msg_id;
+      originalMsgContent.textContent = msg.message_content || 'No content';
+      replyContent.value = '';
+      replyForm.reset();
+      hideReplyMessage();
+      replySubmitBtn.classList.remove('loading');
+      replySubmitBtn.disabled = false;
+      
+      replyModal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+      
+      setTimeout(() => replyContent.focus(), 100);
+    }
+
+    function closeReplyModal() {
+      replyModal.classList.remove('active');
+      document.body.style.overflow = '';
+      hideReplyMessage();
+      replySubmitBtn.classList.remove('loading');
+      replySubmitBtn.disabled = false;
+      currentReplyMsgId = null;
+    }
+
+    closeReplyModalBtn.addEventListener('click', closeReplyModal);
+
+    replyModal.addEventListener('click', function(e) {
+      if (e.target === replyModal) {
+        closeReplyModal();
+      }
+    });
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && replyModal.classList.contains('active')) {
+        closeReplyModal();
+      }
+    });
+
+    // ========== REPLY FORM SUBMISSION ==========
+    replyForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      hideReplyMessage();
+
+      const reply = replyContent.value.trim();
+      
+      if (!reply) {
+        showReplyMessage('Please type a reply message.', 'error');
+        return;
+      }
+
+      if (!currentReplyMsgId) {
+        showReplyMessage('An error occurred. Please try again.', 'error');
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append('reply_content', reply);
+
+      replySubmitBtn.classList.add('loading');
+      replySubmitBtn.disabled = true;
+
+      try {
+        const response = await fetch(`/msg/reply-to-email/${currentReplyMsgId}`, {
+          method: 'POST',
+          body: formData,
+        });
+
+        let data;
+        try {
+          data = await response.json();
+        } catch (_) {
+          throw new Error('Server responded with invalid JSON.');
+        }
+
+        if (response.ok && data.success) {
+          showReplyMessage(data.message || 'Reply sent successfully!', 'success');
+          
+          setTimeout(() => {
+            closeReplyModal();
+            fetchMessages();
+          }, 1000);
+        } else {
+          const errorMsg = data.message || 'Failed to send reply.';
+          showReplyMessage(errorMsg, 'error');
+        }
+      } catch (error) {
+        console.error('Reply error:', error);
+        showReplyMessage('Network error. Please try again later.', 'error');
+      } finally {
+        replySubmitBtn.classList.remove('loading');
+        replySubmitBtn.disabled = false;
+      }
+    });
+
+    // ========== MESSAGES & STATUS HELPER ==========
+    function showReplyMessage(text, type = 'error') {
+      replyMessage.className = `message-box ${type}`;
+      replyMessageText.textContent = text;
+      replyMessage.style.display = 'flex';
+    }
+
+    function hideReplyMessage() {
+      replyMessage.className = 'message-box hidden';
+      replyMessage.style.display = 'none';
+    }
+
+    function showTemporaryStatus(message, type = 'success') {
+      const originalText = statusText.textContent;
+      const originalIcon = statusIcon.textContent;
+      
+      statusText.textContent = message;
+      statusIcon.textContent = type === 'success' ? 'check_circle' : 'info';
+      
+      setTimeout(() => {
+        statusText.textContent = originalText;
+        statusIcon.textContent = originalIcon;
+      }, 3000);
+    }
+
+    // ========== INITIALIZE ==========
+    fetchMessages();
+  })();
+</script>
+
+</body>
+</html>

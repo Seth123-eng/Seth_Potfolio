@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Account Management · Portfolio</title>
+  <!-- Google Fonts & Material Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
+  <style>
+    /* ===== CSS VARIABLES ===== */
+    :root {
+      --primary: #65A30D;
+      --primary-dark: #4D7C0F;
+      --primary-light: #84CC16;
+      --primary-gradient: linear-gradient(135deg, #84CC16, #65A30D);
+      --primary-bg: rgba(101, 163, 13, 0.08);
+      
+      --bg-main: #F8FAFC;
+      --bg-surface: #FFFFFF;
+      --bg-card: #FFFFFF;
+      
+      --text-primary: #0F172A;
+      --text-secondary: #475569;
+      --text-muted: #94A3B8;
+      --border-color: #E2E8F0;
+      --border-light: #F1F5F9;
+      
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.03);
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.025);
+      --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 10px 10px -5px rgba(0, 0, 0, 0.03);
+      
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-xl: 24px;
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg-main);
+      color: var(--text-primary);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding: 2rem 1.5rem;
+    }
+
+    .account-container {
+      max-width: 800px;
+      width: 100%;
+      margin: 0 auto;
+      background: var(--bg-surface);
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--border-color);
+      box-shadow: var(--shadow-sm);
+      padding: 2.5rem;
+      transition: var(--transition);
+    }
+
+    .account-container:hover {
+      box-shadow: var(--shadow-md);
+    }
+
+    /* Header */
+    .account-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 2rem;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 1.25rem;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .brand .brand-icon {
+      width: 42px;
+      height: 42px;
+      background: var(--primary-gradient);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #FFFFFF;
+      font-size: 1.4rem;
+      box-shadow: 0 4px 12px rgba(101, 163, 13, 0.25);
+    }
+
+    .brand h1 {
+      font-size: 1.4rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--text-primary);
+    }
+
+    /* Profile Section */
+    .profile-section {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+      padding: 1.25rem;
+      background: var(--bg-main);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-color);
+    }
+
+    .profile-avatar-large {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: var(--primary-gradient);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 2rem;
+      color: white;
+      text-transform: uppercase;
+      flex-shrink: 0;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(101, 163, 13, 0.2);
+    }
+
+    .profile-avatar-large img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    .profile-avatar-large .avatar-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      cursor: pointer;
+      transition: var(--transition);
+      z-index: 2;
+    }
+
+    .profile-avatar-large:hover .avatar-overlay {
+      opacity: 1;
+    }
+
+    .profile-avatar-large .avatar-overlay .material-icons-round {
+      font-size: 1.5rem;
+      color: white;
+    }
+
+    .profile-avatar-large .upload-progress {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.3);
+      overflow: hidden;
+      z-index: 2;
+    }
+
+    .profile-avatar-large .upload-progress .progress-bar {
+      height: 100%;
+      background: var(--primary-gradient);
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+
+    .profile-avatar-large .upload-status {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: white;
+      font-size: 0.7rem;
+      font-weight: 600;
+      background: rgba(0, 0, 0, 0.75);
+      padding: 0.2rem 0.6rem;
+      border-radius: 1rem;
+      display: none;
+      z-index: 3;
+      white-space: nowrap;
+    }
+
+    .profile-avatar-large .upload-status.show {
+      display: block;
+    }
+
+    .profile-avatar-large .upload-status.success {
+      background: rgba(101, 163, 13, 0.9);
+    }
+
+    .profile-avatar-large .upload-status.error {
+      background: rgba(220, 38, 38, 0.9);
+    }
+
+    .profile-avatar-large .avatar-initial {
+      position: relative;
+      z-index: 1;
+    }
+
+    .profile-info h2 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .profile-info .email-display {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      margin-top: 0.2rem;
+    }
+
+    /* Form Section */
+    .form-section {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-section-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .form-section-title .material-icons-round {
+      color: var(--primary);
+      font-size: 1.2rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.2rem;
+    }
+
+    .form-group label {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 600;
+      font-size: 0.85rem;
+      color: var(--text-primary);
+      margin-bottom: 0.4rem;
+    }
+
+    .form-group label .material-icons-round {
+      font-size: 1.1rem;
+      color: var(--primary);
+    }
+
+    .input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+      background: var(--bg-surface);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-color);
+      transition: var(--transition);
+    }
+
+    .input-wrapper:focus-within {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(101, 163, 13, 0.15);
+    }
+
+    .input-wrapper .input-icon {
+      padding-left: 1rem;
+      color: var(--text-muted);
+      font-size: 1.1rem;
+    }
+
+    .input-wrapper:focus-within .input-icon {
+      color: var(--primary);
+    }
+
+    .input-wrapper input {
+      width: 100%;
+      padding: 0.8rem 1rem;
+      border: none;
+      background: transparent;
+      font-size: 0.95rem;
+      font-family: var(--font);
+      color: var(--text-primary);
+      outline: none;
+    }
+
+    .input-wrapper input::placeholder {
+      color: var(--text-muted);
+    }
+
+    .password-toggle {
+      padding: 0 1rem;
+      cursor: pointer;
+      color: var(--text-muted);
+      background: none;
+      border: none;
+      display: flex;
+      align-items: center;
+    }
+
+    .password-toggle:hover {
+      color: var(--primary);
+    }
+
+    .btn-primary {
+      padding: 0.8rem 1.8rem;
+      background: var(--primary-gradient);
+      border: none;
+      border-radius: var(--radius-md);
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      transition: var(--transition);
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(101, 163, 13, 0.25);
+      font-family: var(--font);
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(101, 163, 13, 0.35);
+    }
+
+    .btn-primary:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+
+    .btn-primary.loading .btn-text { display: none; }
+    .btn-primary.loading .spinner { display: inline-block; }
+
+    .spinner {
+      display: none;
+      width: 1.2rem;
+      height: 1.2rem;
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      border-top: 3px solid white;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .message-box {
+      margin-top: 1.2rem;
+      padding: 0.9rem 1rem;
+      border-radius: var(--radius-md);
+      font-weight: 500;
+      font-size: 0.9rem;
+      display: none;
+      align-items: center;
+      gap: 0.6rem;
+      border-left: 4px solid;
+    }
+
+    .message-box.error {
+      display: flex;
+      border-left-color: #DC2626;
+      background: #FEF2F2;
+      color: #991B1B;
+    }
+
+    .message-box.success {
+      display: flex;
+      border-left-color: var(--primary);
+      background: #F7FEE7;
+      color: var(--primary-dark);
+    }
+
+    .message-box.hidden { display: none !important; }
+
+    .status-bar {
+      margin-top: 2rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+
+    .status-bar .status {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .file-input-hidden { display: none; }
+
+    @media (max-width: 640px) {
+      .account-container { padding: 1.5rem 1.2rem; }
+      .profile-section { flex-direction: column; text-align: center; }
+      .btn-primary { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="account-container">
+  <!-- Header -->
+  <div class="account-header">
+    <div class="brand">
+      <div class="brand-icon">
+        <span class="material-icons-round">manage_accounts</span>
+      </div>
+      <h1>Account Settings</h1>
+    </div>
+  </div>
+
+  <!-- Profile Section -->
+  <div class="profile-section">
+    <div class="profile-avatar-large" id="profileAvatar">
+      <span class="avatar-initial" id="avatarInitial">U</span>
+      <div class="avatar-overlay" id="avatarUploadOverlay">
+        <span class="material-icons-round">photo_camera</span>
+      </div>
+      <div class="upload-status" id="uploadStatus">Uploading...</div>
+      <div class="upload-progress">
+        <div class="progress-bar" id="uploadProgressBar"></div>
+      </div>
+    </div>
+    <div class="profile-info">
+      <h2 id="userNameDisplay">Loading...</h2>
+      <div class="email-display">
+        <span class="material-icons-round" style="font-size: 1rem;">email</span>
+        <span id="userEmailDisplay">Loading...</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Form Section -->
+  <div class="form-section">
+    <div class="form-section-title">
+      <span class="material-icons-round">edit</span>
+      Update Profile Details
+    </div>
+    
+    <form id="profileForm" novalidate>
+      <div class="form-group">
+        <label for="userNameInput">
+          <span class="material-icons-round">badge</span>
+          Username
+        </label>
+        <div class="input-wrapper">
+          <span class="material-icons-round input-icon">person</span>
+          <input type="text" id="userNameInput" name="user_name" placeholder="Enter username" required />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="currentPasswordInput">
+          <span class="material-icons-round">lock</span>
+          Current Password
+        </label>
+        <div class="input-wrapper">
+          <span class="material-icons-round input-icon">key</span>
+          <input type="password" id="currentPasswordInput" name="current_password" placeholder="Current password" required />
+          <button type="button" class="password-toggle" id="toggleCurrentPassword">
+            <span class="material-icons-round">visibility</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="newPasswordInput">
+          <span class="material-icons-round">lock_open</span>
+          New Password
+        </label>
+        <div class="input-wrapper">
+          <span class="material-icons-round input-icon">key</span>
+          <input type="password" id="newPasswordInput" name="new_password" placeholder="New password" required minlength="6" />
+          <button type="button" class="password-toggle" id="toggleNewPassword">
+            <span class="material-icons-round">visibility</span>
+          </button>
+        </div>
+      </div>
+
+      <button type="submit" class="btn-primary" id="updateProfileBtn">
+        <span class="btn-text">Save Changes</span>
+        <span class="spinner"></span>
+      </button>
+    </form>
+
+    <div id="profileMessage" class="message-box hidden">
+      <span class="material-icons-round">info</span>
+      <span id="profileMessageText"></span>
+    </div>
+  </div>
+
+  <!-- Status Bar -->
+  <div class="status-bar">
+    <div class="status">
+      <span class="material-icons-round" id="statusIcon">verified</span>
+      <span id="statusText">Account operational</span>
+    </div>
+  </div>
+</div>
+
+<input type="file" id="avatarFileInput" class="file-input-hidden" accept="image/*" />
+
+<script>
+  (function() {
+    const userNameDisplay = document.getElementById('userNameDisplay');
+    const userEmailDisplay = document.getElementById('userEmailDisplay');
+    const avatarInitial = document.getElementById('avatarInitial');
+    const profileAvatar = document.getElementById('profileAvatar');
+    const userNameInput = document.getElementById('userNameInput');
+    const currentPasswordInput = document.getElementById('currentPasswordInput');
+    const newPasswordInput = document.getElementById('newPasswordInput');
+    const profileForm = document.getElementById('profileForm');
+    const updateProfileBtn = document.getElementById('updateProfileBtn');
+    const profileMessage = document.getElementById('profileMessage');
+    const profileMessageText = document.getElementById('profileMessageText');
+    const avatarFileInput = document.getElementById('avatarFileInput');
+    const avatarUploadOverlay = document.getElementById('avatarUploadOverlay');
+    const statusText = document.getElementById('statusText');
+    const statusIcon = document.getElementById('statusIcon');
+    const uploadProgressBar = document.getElementById('uploadProgressBar');
+    const uploadStatus = document.getElementById('uploadStatus');
+
+    const toggleCurrentPassword = document.getElementById('toggleCurrentPassword');
+    const toggleNewPassword = document.getElementById('toggleNewPassword');
+
+    let isUploading = false;
+    let profilePhotoUrl = null;
+
+    toggleCurrentPassword.addEventListener('click', function() {
+      const type = currentPasswordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+      currentPasswordInput.setAttribute('type', type);
+      this.querySelector('.material-icons-round').textContent = type === 'password' ? 'visibility' : 'visibility_off';
+    });
+
+    toggleNewPassword.addEventListener('click', function() {
+      const type = newPasswordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+      newPasswordInput.setAttribute('type', type);
+      this.querySelector('.material-icons-round').textContent = type === 'password' ? 'visibility' : 'visibility_off';
+    });
+
+    // ===== LOAD PROFILE PHOTO FROM DATABASE =====
+    async function loadProfilePhoto() {
+      const container = document.getElementById('profileAvatar');
+      
+      try {
+        console.log('🔄 Loading profile photo from database...');
+        
+        const response = await fetch('/profile/photo');
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const contentType = response.headers.get('content-type');
+        
+        if (contentType && contentType.startsWith('image/')) {
+          const blob = await response.blob();
+          const imageUrl = URL.createObjectURL(blob);
+          
+          console.log('✅ Profile photo loaded successfully from database');
+          profilePhotoUrl = imageUrl;
+          
+          // Display the image
+          container.innerHTML = `
+            <img src="${imageUrl}" alt="Avatar" />
+            <div class="avatar-overlay" id="avatarUploadOverlay">
+              <span class="material-icons-round">photo_camera</span>
+            </div>
+            <div class="upload-status" id="uploadStatus">Uploading...</div>
+            <div class="upload-progress">
+              <div class="progress-bar" id="uploadProgressBar"></div>
+            </div>
+          `;
+          
+          document.getElementById('avatarUploadOverlay').addEventListener('click', () => avatarFileInput.click());
+          bindStatusElements();
+          statusText.textContent = 'Profile photo loaded';
+          statusIcon.textContent = 'check_circle';
+          statusIcon.style.color = 'var(--primary)';
+          
+        } else {
+          // No profile photo found
+          console.log('ℹ️ No profile photo found in database');
+          showPlaceholder();
+          statusText.textContent = 'No profile photo';
+          statusIcon.textContent = 'info';
+          statusIcon.style.color = 'var(--text-muted)';
+        }
+        
+      } catch (error) {
+        console.error('❌ Error loading profile photo:', error);
+        showPlaceholder();
+        statusText.textContent = 'Failed to load profile photo';
+        statusIcon.textContent = 'error';
+        statusIcon.style.color = '#DC2626';
+      }
+    }
+
+    function showPlaceholder() {
+      const initial = (userNameDisplay.textContent || 'U').charAt(0).toUpperCase();
+      profileAvatar.innerHTML = `
+        <span class="avatar-initial" id="avatarInitial">${initial}</span>
+        <div class="avatar-overlay" id="avatarUploadOverlay">
+          <span class="material-icons-round">photo_camera</span>
+        </div>
+        <div class="upload-status" id="uploadStatus">Uploading...</div>
+        <div class="upload-progress">
+          <div class="progress-bar" id="uploadProgressBar"></div>
+        </div>
+      `;
+      document.getElementById('avatarUploadOverlay').addEventListener('click', () => avatarFileInput.click());
+      bindStatusElements();
+    }
+
+    // ===== BIND STATUS ELEMENTS AFTER DOM UPDATE =====
+    function bindStatusElements() {
+      const newOverlay = document.getElementById('avatarUploadOverlay');
+      const newUploadStatus = document.getElementById('uploadStatus');
+      const newProgressBar = document.getElementById('uploadProgressBar');
+      
+      if (newOverlay) {
+        newOverlay.addEventListener('click', () => avatarFileInput.click());
+      }
+      
+      if (newUploadStatus) {
+        window.uploadStatusEl = newUploadStatus;
+      }
+      if (newProgressBar) {
+        window.progressBarEl = newProgressBar;
+      }
+    }
+
+    // ===== FETCH USER INFO =====
+    async function fetchUserInfo() {
+      try {
+        const response = await fetch('/user/info');
+        const data = await response.json();
+
+        console.log('User info response:', data);
+
+        if (data.success && data.response) {
+          const user = data.response;
+          userNameDisplay.textContent = user.user_name || 'User';
+          userEmailDisplay.textContent = user.email || 'No email';
+          userNameInput.value = user.user_name || '';
+          
+          // Load profile photo from database
+          await loadProfilePhoto();
+          
+        } else {
+          console.error('Failed to fetch user info:', data.message);
+        }
+      } catch (error) {
+        console.error('Error fetching user info:', error);
+      }
+    }
+
+    // ===== UPLOAD AVATAR =====
+    async function uploadAvatar(file) {
+      if (isUploading) {
+        showMessage('An upload is already in progress. Please wait.', 'error');
+        return;
+      }
+
+      if (!file) {
+        showMessage('Please select a file.', 'error');
+        return;
+      }
+
+      if (!file.type.startsWith('image/')) {
+        showMessage('Please select an image file (JPEG, PNG, GIF, WebP).', 'error');
+        return;
+      }
+
+      if (file.size > 5 * 1024 * 1024) {
+        showMessage('File size must be less than 5MB.', 'error');
+        return;
+      }
+
+      isUploading = true;
+      hideMessage();
+
+      const formData = new FormData();
+      formData.append('file', file);
+
+      try {
+        setUploadStatus('Uploading...', 'uploading');
+        updateProgress(30);
+
+        const response = await fetch('/update/account_info/profile_photo', {
+          method: 'POST',
+          body: formData
+        });
+
+        updateProgress(70);
+
+        const data = await response.json();
+
+        if (data.success) {
+          updateProgress(100);
+          setUploadStatus('✓ Done!', 'success');
+          
+          // Reload profile photo from database
+          await loadProfilePhoto();
+          
+          showMessage('Profile photo updated successfully!', 'success');
+
+          statusText.textContent = 'Avatar updated';
+          statusIcon.textContent = 'check_circle';
+          statusIcon.style.color = 'var(--primary)';
+
+          setTimeout(() => {
+            hideUploadStatus();
+            resetProgress();
+            statusText.textContent = 'Account operational';
+            statusIcon.textContent = 'verified';
+            statusIcon.style.color = '';
+          }, 3000);
+        } else {
+          throw new Error(data.message || 'Upload failed');
+        }
+      } catch (error) {
+        console.error('Upload error:', error);
+        setUploadStatus('✗ Failed', 'error');
+        showMessage('Failed to upload profile photo: ' + error.message, 'error');
+        
+        statusText.textContent = 'Upload failed';
+        statusIcon.textContent = 'error';
+        statusIcon.style.color = '#DC2626';
+
+        setTimeout(() => {
+          hideUploadStatus();
+          resetProgress();
+          statusText.textContent = 'Account operational';
+          statusIcon.textContent = 'verified';
+          statusIcon.style.color = '';
+        }, 4000);
+      } finally {
+        isUploading = false;
+      }
+    }
+
+    // ===== STATUS FUNCTIONS =====
+    function showMessage(text, type = 'error') {
+      profileMessage.className = `message-box ${type}`;
+      profileMessageText.textContent = text;
+      profileMessage.style.display = 'flex';
+    }
+
+    function hideMessage() {
+      profileMessage.className = 'message-box hidden';
+      profileMessage.style.display = 'none';
+    }
+
+    function setUploadStatus(message, type = 'uploading') {
+      const statusEl = document.getElementById('uploadStatus') || uploadStatus;
+      if (statusEl) {
+        statusEl.textContent = message;
+        statusEl.className = 'upload-status show';
+        if (type === 'success') {
+          statusEl.classList.add('success');
+        } else if (type === 'error') {
+          statusEl.classList.add('error');
+        }
+      }
+    }
+
+    function hideUploadStatus() {
+      const statusEl = document.getElementById('uploadStatus') || uploadStatus;
+      if (statusEl) {
+        statusEl.className = 'upload-status';
+        statusEl.style.display = 'none';
+      }
+    }
+
+    function updateProgress(percent) {
+      const bar = document.getElementById('uploadProgressBar') || uploadProgressBar;
+      if (bar) {
+        bar.style.width = Math.min(percent, 100) + '%';
+      }
+    }
+
+    function resetProgress() {
+      const bar = document.getElementById('uploadProgressBar') || uploadProgressBar;
+      if (bar) {
+        bar.style.width = '0%';
+      }
+    }
+
+    // ===== EVENT LISTENERS =====
+    avatarFileInput.addEventListener('change', async function() {
+      const file = this.files[0];
+      if (!file) return;
+      await uploadAvatar(file);
+      this.value = '';
+    });
+
+    avatarUploadOverlay.addEventListener('click', () => {
+      if (!isUploading) {
+        avatarFileInput.click();
+      }
+    });
+
+    profileForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      hideMessage();
+
+      const userName = userNameInput.value.trim();
+      const currentPassword = currentPasswordInput.value;
+      const newPassword = newPasswordInput.value;
+
+      if (!userName || !currentPassword || !newPassword) {
+        showMessage('Please fill in all details.', 'error');
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append('user_name', userName);
+      formData.append('current_password', currentPassword);
+      formData.append('new_password', newPassword);
+
+      updateProfileBtn.classList.add('loading');
+      updateProfileBtn.disabled = true;
+
+      try {
+        const response = await fetch('/update/account_info', { 
+          method: 'POST', 
+          body: formData 
+        });
+        const data = await response.json();
+
+        if (response.ok && data.success) {
+          showMessage(data.message || 'Updated successfully!', 'success');
+          currentPasswordInput.value = '';
+          newPasswordInput.value = '';
+          await fetchUserInfo();
+          
+          statusText.textContent = 'Profile updated';
+          statusIcon.textContent = 'check_circle';
+          statusIcon.style.color = 'var(--primary)';
+          
+          setTimeout(() => {
+            statusText.textContent = 'Account operational';
+            statusIcon.textContent = 'verified';
+            statusIcon.style.color = '';
+          }, 3000);
+        } else {
+          showMessage(data.message || 'Update failed.', 'error');
+        }
+      } catch (error) {
+        showMessage('Network error.', 'error');
+      } finally {
+        updateProfileBtn.classList.remove('loading');
+        updateProfileBtn.disabled = false;
+      }
+    });
+
+    // ===== DRAG AND DROP SUPPORT =====
+    profileAvatar.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      profileAvatar.style.borderColor = 'var(--primary)';
+      profileAvatar.style.boxShadow = '0 0 0 4px rgba(101, 163, 13, 0.2)';
+    });
+
+    profileAvatar.addEventListener('dragleave', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      profileAvatar.style.borderColor = '';
+      profileAvatar.style.boxShadow = '';
+    });
+
+    profileAvatar.addEventListener('drop', async (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      profileAvatar.style.borderColor = '';
+      profileAvatar.style.boxShadow = '';
+      
+      const files = e.dataTransfer.files;
+      if (files.length > 0) {
+        const file = files[0];
+        if (file.type.startsWith('image/')) {
+          await uploadAvatar(file);
+        } else {
+          showMessage('Please drop an image file.', 'error');
+        }
+      }
+    });
+
+    // ===== CLEANUP OBJECT URL ON UNLOAD =====
+    window.addEventListener('beforeunload', function() {
+      if (profilePhotoUrl) {
+        URL.revokeObjectURL(profilePhotoUrl);
+      }
+    });
+
+    // ===== INITIAL LOAD =====
+    fetchUserInfo();
+
+    console.log('Account page ready with database-based profile photo');
+  })();
+</script>
+
+</body>
+</html>

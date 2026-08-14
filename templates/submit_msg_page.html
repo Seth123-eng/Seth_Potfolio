@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact · Portfolio</title>
+  
+  <!-- Google Fonts & Material Icons (matching dashboard.html) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
+  
+  <style>
+    /* ===== CSS VARIABLES MATCHING DASHBOARD.HTML ===== */
+    :root {
+      --primary: #65A30D; /* Vibrant Lime/Green Accent */
+      --primary-dark: #4D7C0F;
+      --primary-light: #84CC16;
+      --primary-gradient: linear-gradient(135deg, #84CC16, #65A30D);
+      --primary-bg: rgba(101, 163, 13, 0.08);
+      
+      /* Light theme surface colors */
+      --bg-main: #F8FAFC;
+      --bg-surface: #FFFFFF;
+      --bg-card: #FFFFFF;
+      --bg-topbar: rgba(255, 255, 255, 0.85);
+      
+      --text-primary: #0F172A;
+      --text-secondary: #475569;
+      --text-muted: #94A3B8;
+      --border-color: #E2E8F0;
+      --border-light: #F1F5F9;
+      
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.03);
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.025);
+      --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 10px 10px -5px rgba(0, 0, 0, 0.03);
+      
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-xl: 24px;
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg-main);
+      color: var(--text-primary);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+
+    .submit-container {
+      max-width: 720px;
+      width: 100%;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-xl);
+      padding: 2.5rem 2.5rem 2.8rem;
+      transition: var(--transition);
+      animation: fadeUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+      position: relative;
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.98);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    /* ===== HEADER ===== */
+    .submit-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 2rem;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 1.25rem;
+      gap: 1rem;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+
+    .brand-icon {
+      width: 48px;
+      height: 48px;
+      background: var(--primary-bg);
+      border: 1px solid rgba(101, 163, 13, 0.2);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary);
+      font-size: 1.5rem;
+      flex-shrink: 0;
+    }
+
+    .brand-text h1 {
+      font-size: 1.4rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
+    }
+
+    .brand-text p {
+      color: var(--text-secondary);
+      font-size: 0.85rem;
+      font-weight: 400;
+    }
+
+    .header-badge {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--primary-dark);
+      background: var(--primary-bg);
+      padding: 0.35rem 0.8rem;
+      border-radius: 20px;
+      border: 1px solid rgba(101, 163, 13, 0.2);
+    }
+
+    /* ===== FORM STYLING ===== */
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 600;
+      font-size: 0.85rem;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .form-group label .material-icons-round {
+      font-size: 1.1rem;
+      color: var(--primary);
+    }
+
+    .form-group label .required {
+      color: #DC2626;
+    }
+
+    .input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+      background: var(--bg-surface);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-color);
+      transition: var(--transition);
+    }
+
+    .input-wrapper:focus-within {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(101, 163, 13, 0.15);
+    }
+
+    .input-wrapper .input-icon {
+      padding-left: 1rem;
+      color: var(--text-muted);
+      font-size: 1.2rem;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .input-wrapper:focus-within .input-icon {
+      color: var(--primary);
+    }
+
+    .input-wrapper input,
+    .input-wrapper textarea {
+      width: 100%;
+      padding: 0.85rem 1rem;
+      border: none;
+      background: transparent;
+      font-size: 0.95rem;
+      font-family: var(--font);
+      color: var(--text-primary);
+      outline: none;
+    }
+
+    .input-wrapper textarea {
+      min-height: 160px;
+      resize: vertical;
+    }
+
+    .input-wrapper input::placeholder,
+    .input-wrapper textarea::placeholder {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    .input-wrapper textarea::-webkit-scrollbar {
+      width: 6px;
+    }
+    .input-wrapper textarea::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .input-wrapper textarea::-webkit-scrollbar-thumb {
+      background: var(--border-color);
+      border-radius: 10px;
+    }
+
+    .input-hint {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 0.4rem;
+      padding-left: 0.2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .input-hint .material-icons-round {
+      font-size: 0.9rem;
+    }
+
+    /* Character Counter */
+    .char-counter {
+      display: flex;
+      justify-content: flex-end;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 0.3rem;
+      padding-right: 0.2rem;
+    }
+
+    .char-counter.warning {
+      color: #D97706;
+    }
+
+    .char-counter.danger {
+      color: #DC2626;
+    }
+
+    /* ===== BUTTON STYLING ===== */
+    .btn-submit {
+      width: 100%;
+      padding: 0.9rem;
+      background: var(--primary-gradient);
+      border: none;
+      border-radius: var(--radius-md);
+      font-weight: 700;
+      font-size: 1rem;
+      color: #FFFFFF;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      transition: var(--transition);
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(101, 163, 13, 0.25);
+      font-family: var(--font);
+      margin-top: 0.5rem;
+    }
+
+    .btn-submit .material-icons-round {
+      font-size: 1.2rem;
+      transition: var(--transition);
+    }
+
+    .btn-submit:hover:not(:disabled) {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(101, 163, 13, 0.35);
+    }
+
+    .btn-submit:hover:not(:disabled) .material-icons-round {
+      transform: translateX(3px);
+    }
+
+    .btn-submit:active:not(:disabled) {
+      transform: translateY(0);
+    }
+
+    .btn-submit:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* Loading Spinner */
+    .btn-submit.loading .btn-text,
+    .btn-submit.loading .btn-icon {
+      display: none;
+    }
+    
+    .btn-submit.loading .spinner {
+      display: inline-block;
+    }
+
+    .spinner {
+      display: none;
+      width: 1.2rem;
+      height: 1.2rem;
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      border-top: 3px solid #FFFFFF;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* ===== MESSAGE BOX ===== */
+    .message-box {
+      margin-top: 1.2rem;
+      padding: 0.9rem 1rem;
+      border-radius: var(--radius-md);
+      font-weight: 500;
+      font-size: 0.9rem;
+      display: none;
+      align-items: center;
+      gap: 0.6rem;
+      border-left: 4px solid;
+    }
+
+    .message-box.error {
+      display: flex;
+      border-left-color: #DC2626;
+      background: #FEF2F2;
+      color: #991B1B;
+    }
+
+    .message-box.success {
+      display: flex;
+      border-left-color: var(--primary);
+      background: #F7FEE7;
+      color: var(--primary-dark);
+    }
+
+    .message-box .material-icons-round {
+      font-size: 1.2rem;
+    }
+
+    .message-box.hidden {
+      display: none !important;
+    }
+
+    /* ===== STATUS BAR ===== */
+    .status-bar {
+      margin-top: 2rem;
+      padding-top: 1.2rem;
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+
+    .status-bar .status {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .status-bar .status .material-icons-round {
+      font-size: 1.1rem;
+    }
+
+    /* ===== SUCCESS STATE ===== */
+    .form-success {
+      display: none;
+      text-align: center;
+      padding: 2rem 1rem;
+    }
+
+    .form-success.active {
+      display: block;
+    }
+
+    .form-success .material-icons-round {
+      font-size: 3.5rem;
+      color: var(--primary);
+      background: var(--primary-bg);
+      padding: 1rem;
+      border-radius: 50%;
+      margin-bottom: 1rem;
+    }
+
+    .form-success h3 {
+      color: var(--text-primary);
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .form-success p {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 640px) {
+      body {
+        padding: 1rem;
+      }
+      .submit-container {
+        padding: 1.5rem 1.2rem 1.8rem;
+        border-radius: var(--radius-lg);
+      }
+      .brand-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+      }
+      .brand-text h1 {
+        font-size: 1.2rem;
+      }
+      .submit-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.8rem;
+      }
+      .header-badge {
+        align-self: flex-start;
+      }
+      .input-wrapper textarea {
+        min-height: 130px;
+      }
+      .btn-submit {
+        font-size: 0.9rem;
+        padding: 0.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="submit-container">
+  <!-- Header -->
+  <div class="submit-header">
+    <div class="brand">
+      <div class="brand-icon">
+        <span class="material-icons-round">send</span>
+      </div>
+      <div class="brand-text">
+        <h1>Submit Message</h1>
+        <p>Send a direct message or inquiry</p>
+      </div>
+    </div>
+    <div class="header-badge">
+      <span class="material-icons-round" style="font-size:1rem;">mark_email_unread</span>
+      Contact Form
+    </div>
+  </div>
+
+  <!-- Form -->
+  <form id="submitForm" novalidate>
+    <div class="form-group">
+      <label for="emailInput">
+        <span class="material-icons-round">email</span>
+        Your Email <span class="required">*</span>
+      </label>
+      <div class="input-wrapper">
+        <span class="material-icons-round input-icon">mail_outline</span>
+        <input 
+          type="email" 
+          id="emailInput" 
+          name="email" 
+          placeholder="you@example.com" 
+          required
+          autocomplete="email"
+        />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="messageInput">
+        <span class="material-icons-round">message</span>
+        Message <span class="required">*</span>
+      </label>
+      <div class="input-wrapper">
+        <span class="material-icons-round input-icon" style="align-self: flex-start; margin-top: 0.85rem;">edit_note</span>
+        <textarea 
+          id="messageInput" 
+          name="message_description"
+          placeholder="Write your message here..."
+          required
+          maxlength="5000"
+        ></textarea>
+      </div>
+      <div class="char-counter" id="charCounter">
+        <span id="charCount">0</span> / 5000 characters
+      </div>
+      <div class="input-hint">
+        <span class="material-icons-round">info</span>
+        Be clear and descriptive in your message
+      </div>
+    </div>
+
+    <button type="submit" class="btn-submit" id="submitBtn">
+      <span class="btn-icon"><span class="material-icons-round">send</span></span>
+      <span class="btn-text">Send Message</span>
+      <span class="spinner"></span>
+    </button>
+  </form>
+
+  <!-- Message Box -->
+  <div id="messageBox" class="message-box hidden">
+    <span class="material-icons-round">info</span>
+    <span id="messageText"></span>
+  </div>
+
+  <!-- Success State -->
+  <div class="form-success" id="formSuccess">
+    <span class="material-icons-round">check_circle</span>
+    <h3>Message Sent!</h3>
+    <p>Your message has been submitted successfully. I'll get back to you soon.</p>
+  </div>
+
+  <!-- Status Bar -->
+  <div class="status-bar">
+    <div class="status">
+      <span class="material-icons-round" id="statusIcon" style="color: var(--text-muted);">info</span>
+      <span id="statusText">Ready to send your message</span>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function() {
+    'use strict';
+
+    // ========== DOM ELEMENTS ==========
+    const form = document.getElementById('submitForm');
+    const emailInput = document.getElementById('emailInput');
+    const messageInput = document.getElementById('messageInput');
+    const submitBtn = document.getElementById('submitBtn');
+    const messageBox = document.getElementById('messageBox');
+    const messageText = document.getElementById('messageText');
+    const formSuccess = document.getElementById('formSuccess');
+    const statusText = document.getElementById('statusText');
+    const statusIcon = document.getElementById('statusIcon');
+    const charCount = document.getElementById('charCount');
+    const charCounter = document.getElementById('charCounter');
+
+    // ========== CHARACTER COUNTER ==========
+    messageInput.addEventListener('input', function() {
+      const length = this.value.length;
+      const maxLength = 5000;
+      charCount.textContent = length;
+      
+      charCounter.classList.remove('warning', 'danger');
+      if (length > maxLength * 0.8) {
+        charCounter.classList.add('warning');
+      }
+      if (length > maxLength * 0.95) {
+        charCounter.classList.add('danger');
+      }
+    });
+
+    // ========== MESSAGE FUNCTIONS ==========
+    function showMessage(text, type = 'error') {
+      messageBox.className = `message-box ${type}`;
+      messageText.textContent = text;
+      messageBox.style.display = 'flex';
+    }
+
+    function hideMessage() {
+      messageBox.className = 'message-box hidden';
+      messageBox.style.display = 'none';
+    }
+
+    function setLoading(loading) {
+      if (loading) {
+        submitBtn.classList.add('loading');
+        submitBtn.disabled = true;
+        statusText.textContent = 'Sending...';
+        statusIcon.textContent = 'hourglass_empty';
+        statusIcon.style.color = '#D97706';
+      } else {
+        submitBtn.classList.remove('loading');
+        submitBtn.disabled = false;
+      }
+    }
+
+    function setStatus(text, icon, color = 'var(--text-muted)') {
+      statusText.textContent = text;
+      statusIcon.textContent = icon || 'info';
+      statusIcon.style.color = color;
+    }
+
+    function showSuccessState() {
+      form.style.display = 'none';
+      formSuccess.classList.add('active');
+      setStatus('Message sent successfully!', 'check_circle', 'var(--primary)');
+    }
+
+    // ========== FORM SUBMISSION ==========
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      hideMessage();
+
+      const email = emailInput.value.trim();
+      const message = messageInput.value.trim();
+
+      // Validation
+      if (!email) {
+        showMessage('Please provide your email address.', 'error');
+        emailInput.focus();
+        return;
+      }
+
+      if (!isValidEmail(email)) {
+        showMessage('Please enter a valid email address.', 'error');
+        emailInput.focus();
+        return;
+      }
+
+      if (!message) {
+        showMessage('Please write your message.', 'error');
+        messageInput.focus();
+        return;
+      }
+
+      if (message.length < 10) {
+        showMessage('Your message should be at least 10 characters long.', 'error');
+        messageInput.focus();
+        return;
+      }
+
+      // Prepare form data
+      const formData = new FormData();
+      formData.append('email', email);
+      formData.append('message_description', message);
+
+      setLoading(true);
+
+      try {
+        const response = await fetch('/submit-msg', {
+          method: 'POST',
+          body: formData,
+        });
+
+        let data;
+        try {
+          data = await response.json();
+        } catch (_) {
+          throw new Error('Server responded with invalid JSON.');
+        }
+
+        if (response.ok && data.success) {
+          showSuccessState();
+        } else {
+          const errorMsg = data.message || 'Failed to send message. Please try again.';
+          showMessage(errorMsg, 'error');
+          setStatus('Error sending message', 'error', '#DC2626');
+        }
+      } catch (error) {
+        console.error('Submission error:', error);
+        showMessage('Network error. Please try again later.', 'error');
+        setStatus('Network error', 'error', '#DC2626');
+      } finally {
+        setLoading(false);
+      }
+    });
+
+    // ========== EMAIL VALIDATION ==========
+    function isValidEmail(email) {
+      const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return re.test(email);
+    }
+
+    // ========== KEYBOARD SHORTCUT ==========
+    messageInput.addEventListener('keydown', function(e) {
+      if (e.ctrlKey && e.key === 'Enter') {
+        e.preventDefault();
+        form.dispatchEvent(new Event('submit'));
+      }
+    });
+
+    console.log('✨ Refactored contact page ready.');
+  })();
+</script>
+
+</body>
+</html>

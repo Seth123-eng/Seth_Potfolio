@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Message Received</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
+</head>
+<body style="font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background: #F8FAFC; margin: 0; padding: 0; min-height: 100vh; display: flex; align-items: center; justify-content: center;">
+
+    <div style="max-width: 620px; width: 100%; background: #FFFFFF; border-radius: 28px; border: 1px solid #E2E8F0; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06); padding: 0; overflow: hidden; margin: 1.5rem;">
+        
+        <!-- Top Accent Bar -->
+        <div style="height: 6px; background: linear-gradient(135deg, #84CC16, #65A30D);"></div>
+
+        <!-- Header -->
+        <div style="padding: 2rem 2.2rem 1.5rem; border-bottom: 1px solid #F1F5F9;">
+            <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                    <div style="width: 48px; height: 48px; background: linear-gradient(135deg, #84CC16, #65A30D); border-radius: 14px; display: flex; align-items: center; justify-content: center; color: #FFFFFF; box-shadow: 0 4px 12px rgba(101, 163, 13, 0.25);">
+                        <span style="font-size: 1.6rem;">📨</span>
+                    </div>
+                    <div>
+                        <h1 style="font-size: 1.2rem; font-weight: 800; letter-spacing: -0.03em; color: #0F172A; margin: 0;">New Message</h1>
+                        <p style="font-size: 0.75rem; color: #94A3B8; margin: 0; font-weight: 500;">Received from contact form</p>
+                    </div>
+                </div>
+                <div style="display: flex; align-items: center; gap: 0.5rem; background: #F7FEE7; padding: 0.25rem 0.8rem; border-radius: 20px; border: 1px solid rgba(101, 163, 13, 0.2);">
+                    <span style="width: 8px; height: 8px; background: #65A30D; border-radius: 50%; display: inline-block;"></span>
+                    <span style="font-size: 0.7rem; font-weight: 600; color: #4D7C0F;">NEW</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Message Content -->
+        <div style="padding: 2rem 2.2rem 2rem;">
+            
+            <!-- Sender Info -->
+            <div style="background: #F8FAFC; border-radius: 16px; padding: 1.2rem 1.5rem; margin-bottom: 1.5rem; border: 1px solid #F1F5F9; display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
+                <div style="display: flex; align-items: center; gap: 0.6rem;">
+                    <span style="font-size: 1.2rem;">👤</span>
+                    <span style="font-weight: 600; color: #475569; font-size: 0.85rem;">From:</span>
+                </div>
+                <div id="user-email-div" style="background: white; padding: 0.4rem 1rem; border-radius: 8px; border: 1px solid #E2E8F0; font-size: 0.9rem; font-weight: 500; color: #0F172A; display: inline-flex; align-items: center; gap: 0.5rem;">
+                    <span style="color: #65A30D;">✉️</span>
+                    <span id="user-email-text" style="color: #0F172A;">user@example.com</span>
+                </div>
+            </div>
+
+            <!-- Message Body -->
+            <div style="background: #FFFFFF; border-radius: 16px; padding: 1.8rem; border: 1px solid #E2E8F0; position: relative; min-height: 120px;">
+                <!-- Decorative quote mark -->
+                <div style="position: absolute; top: -8px; left: 16px; background: #FFFFFF; padding: 0 8px; color: #84CC16; font-size: 2.5rem; line-height: 1; opacity: 0.3;">
+                    "
+                </div>
+                <div id="msg-body-div" style="font-size: 0.95rem; line-height: 1.9; color: #1E293B; padding-top: 0.5rem;">
+                    <p style="margin: 0; color: #334155; font-weight: 400;">
+                        [Message content will appear here]
+                    </p>
+                </div>
+            </div>
+
+            <!-- Message Metadata -->
+            <div style="margin-top: 1.5rem; display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between;">
+                <div style="display: flex; align-items: center; gap: 0.6rem; background: #F1F5F9; padding: 0.4rem 1rem; border-radius: 20px;">
+                    <span style="font-size: 0.9rem;">📅</span>
+                    <span style="font-size: 0.7rem; color: #64748B; font-weight: 500;" id="message-timestamp">Received: [Timestamp]</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 0.6rem; background: #F1F5F9; padding: 0.4rem 1rem; border-radius: 20px;">
+                    <span style="font-size: 0.9rem;">🔒</span>
+                    <span style="font-size: 0.7rem; color: #64748B; font-weight: 500;">End-to-end encrypted</span>
+                </div>
+            </div>
+
+            <!-- Divider -->
+            <div style="margin: 1.8rem 0 1.2rem; height: 1px; background: linear-gradient(to right, #E2E8F0 30%, transparent);"></div>
+
+            <!-- Action Indicator -->
+            <div style="margin-top: 1.5rem; display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap;">
+                <div style="display: flex; align-items: center; gap: 0.4rem; padding: 0.3rem 1rem; background: #F1F5F9; border-radius: 20px; font-size: 0.7rem; color: #475569; border: 1px solid #E2E8F0;">
+                    <span>✅</span>
+                    <span>Received</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 0.4rem; padding: 0.3rem 1rem; background: #F1F5F9; border-radius: 20px; font-size: 0.7rem; color: #475569; border: 1px solid #E2E8F0;">
+                    <span>🔄</span>
+                    <span>Pending Review</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div style="background: #FAFBFC; padding: 1.2rem 2.2rem; border-top: 1px solid #F1F5F9; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.8rem;">
+            <div style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.75rem; color: #94A3B8;">
+                <span style="display: inline-flex; align-items: center; gap: 0.3rem;">
+                    <span>🏷️</span>
+                    <span>Portfolio Message System</span>
+                </span>
+            </div>
+            <div style="font-size: 0.7rem; color: #CBD5E1;">
+                <span>© 2024 Portfolio · All rights reserved</span>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>

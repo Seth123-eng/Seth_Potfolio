@@ -1,0 +1,1485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Me · Portfolio</title>
+  <!-- Google Font & Material Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
+  <!-- CKEditor 5 CDN -->
+  <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
+  <style>
+    /* ===== CSS VARIABLES ===== */
+    :root {
+      --primary: #65A30D;
+      --primary-dark: #4D7C0F;
+      --primary-light: #84CC16;
+      --primary-gradient: linear-gradient(135deg, #84CC16, #65A30D);
+      --primary-bg: rgba(101, 163, 13, 0.08);
+      
+      --bg-main: #F8FAFC;
+      --bg-surface: #FFFFFF;
+      --bg-card: #FFFFFF;
+      
+      --text-primary: #0F172A;
+      --text-secondary: #475569;
+      --text-muted: #94A3B8;
+      --border-color: #E2E8F0;
+      --border-light: #F1F5F9;
+      
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.03);
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.025);
+      --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 10px 10px -5px rgba(0, 0, 0, 0.03);
+      
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-xl: 24px;
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg-main);
+      color: var(--text-primary);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1.5rem;
+    }
+
+    .about-container {
+      max-width: 1100px;
+      width: 100%;
+      background: var(--bg-surface);
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--border-color);
+      box-shadow: var(--shadow-sm);
+      padding: 2.5rem 2.2rem 2.5rem;
+      transition: var(--transition);
+    }
+
+    .about-container:hover {
+      box-shadow: var(--shadow-md);
+      border-color: var(--border-color);
+    }
+
+    /* Header */
+    .about-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 2rem;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 1.25rem;
+      gap: 1rem;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .brand .material-icons-round {
+      width: 42px;
+      height: 42px;
+      background: var(--primary-gradient);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #FFFFFF;
+      font-size: 1.4rem;
+      box-shadow: 0 4px 12px rgba(101, 163, 13, 0.25);
+    }
+
+    .brand h1 {
+      font-size: 1.4rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--text-primary);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .btn-add-about {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.6rem 1.2rem;
+      background: var(--primary-gradient);
+      color: #FFFFFF;
+      border: none;
+      border-radius: var(--radius-md);
+      font-weight: 700;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: var(--transition);
+      box-shadow: 0 4px 12px rgba(101, 163, 13, 0.25);
+      font-family: var(--font);
+    }
+
+    .btn-add-about:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(101, 163, 13, 0.35);
+    }
+
+    .btn-add-about .material-icons-round {
+      font-size: 1.2rem;
+    }
+
+    .btn-add-about.hidden {
+      display: none !important;
+    }
+
+    /* ===== TWO COLUMN LAYOUT ===== */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 280px;
+      gap: 2rem;
+      margin: 1.5rem 0;
+      min-height: 300px;
+    }
+
+    /* Left Column - About Content */
+    .about-content {
+      min-height: 200px;
+    }
+
+    .about-text {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: var(--text-primary);
+    }
+
+    .about-text.empty {
+      color: var(--text-muted);
+      font-style: italic;
+      text-align: center;
+      padding: 3rem 1rem;
+    }
+
+    .about-text img {
+      max-width: 100%;
+      height: auto;
+      border-radius: var(--radius-md);
+    }
+
+    .about-text h1, .about-text h2, .about-text h3 {
+      margin-top: 1.5rem;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+      font-weight: 700;
+    }
+
+    .about-text p {
+      margin-bottom: 1rem;
+      color: var(--text-secondary);
+    }
+
+    .about-text ul, .about-text ol {
+      padding-left: 2rem;
+      margin-bottom: 1rem;
+      color: var(--text-secondary);
+    }
+
+    /* Right Column - Profile Picture */
+    .profile-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      width: 100%;
+    }
+
+    .profile-avatar-wrapper {
+      position: relative;
+      width: 100%;
+      max-width: 280px;
+      aspect-ratio: 1 / 1;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      background: var(--bg-main);
+      border: 2px solid var(--border-color);
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+    }
+
+    .profile-avatar-wrapper:hover {
+      box-shadow: var(--shadow-md);
+      border-color: var(--primary);
+    }
+
+    .profile-avatar-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .profile-avatar-wrapper .avatar-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      background: var(--bg-main);
+    }
+
+    .profile-avatar-wrapper .avatar-placeholder .material-icons-round {
+      font-size: 4rem;
+      color: var(--border-color);
+    }
+
+    .profile-avatar-wrapper .avatar-placeholder span {
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+
+    .profile-avatar-wrapper .avatar-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      cursor: pointer;
+      transition: var(--transition);
+      backdrop-filter: blur(2px);
+    }
+
+    .profile-avatar-wrapper:hover .avatar-overlay {
+      opacity: 1;
+    }
+
+    .profile-avatar-wrapper .avatar-overlay .material-icons-round {
+      font-size: 2.5rem;
+      color: white;
+    }
+
+    .profile-avatar-wrapper .avatar-overlay .overlay-text {
+      color: white;
+      font-size: 0.75rem;
+      font-weight: 500;
+      margin-left: 0.25rem;
+    }
+
+    .profile-name {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      text-align: center;
+      margin-top: 0.25rem;
+    }
+
+    .profile-role {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      text-align: center;
+    }
+
+    .file-input-hidden {
+      display: none;
+    }
+
+    /* About Actions (Update & Delete) */
+    .about-actions {
+      display: flex;
+      gap: 0.8rem;
+      margin-top: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .about-actions.hidden {
+      display: none !important;
+    }
+
+    .btn-about-action {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.6rem 1.2rem;
+      border: none;
+      border-radius: var(--radius-md);
+      font-weight: 600;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: var(--transition);
+      font-family: var(--font);
+    }
+
+    .btn-edit {
+      background: var(--primary-bg);
+      color: var(--primary);
+    }
+
+    .btn-edit:hover {
+      background: rgba(101, 163, 13, 0.15);
+      transform: translateY(-1px);
+    }
+
+    .btn-delete {
+      background: #FEF2F2;
+      color: #DC2626;
+    }
+
+    .btn-delete:hover {
+      background: #FEE2E2;
+      transform: translateY(-1px);
+    }
+
+    /* Status indicator */
+    .status-bar {
+      margin-top: 2rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+
+    .status-bar .status {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .status-bar .status .material-icons-round {
+      font-size: 1.2rem;
+    }
+
+    .status-bar .back-link {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      transition: var(--transition);
+    }
+
+    .status-bar .back-link:hover {
+      color: var(--primary);
+    }
+
+    /* ========== MODALS ========== */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.4);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      animation: modalFadeIn 0.3s ease;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    @keyframes modalFadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes modalSlideUp {
+      from { 
+        opacity: 0;
+        transform: translateY(20px) scale(0.98);
+      }
+      to { 
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .modal-content {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-xl);
+      width: 100%;
+      max-width: 780px;
+      padding: 2.5rem 2.5rem 2.8rem;
+      position: relative;
+      animation: modalSlideUp 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+      max-height: 92vh;
+      overflow-y: auto;
+      color: var(--text-primary);
+    }
+
+    .modal-close {
+      position: sticky;
+      float: right;
+      top: 0;
+      background: var(--bg-main);
+      border: 1px solid var(--border-color);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      font-size: 1.3rem;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: -0.5rem;
+      margin-right: -0.5rem;
+    }
+
+    .modal-close:hover {
+      background: rgba(239, 68, 68, 0.1);
+      color: #DC2626;
+      border-color: rgba(239, 68, 68, 0.2);
+      transform: rotate(90deg);
+    }
+
+    .modal-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 0.25rem;
+    }
+
+    .modal-subtitle {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      margin-bottom: 1.8rem;
+      padding-left: 4px;
+    }
+
+    .modal-form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .modal-form-group label {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 600;
+      font-size: 0.85rem;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .modal-form-group label .material-icons-round {
+      font-size: 1.1rem;
+      color: var(--primary);
+    }
+
+    .ckeditor-container {
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+      transition: var(--transition);
+      background: var(--bg-surface);
+    }
+
+    .ckeditor-container:focus-within {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(101, 163, 13, 0.15);
+    }
+
+    .ckeditor-container .ck-editor__editable {
+      min-height: 250px;
+      max-height: 400px;
+      background: var(--bg-surface) !important;
+      color: var(--text-primary) !important;
+    }
+
+    .ckeditor-container .ck-editor__editable_inline {
+      border: none !important;
+    }
+
+    .ckeditor-container .ck-toolbar {
+      border: none !important;
+      border-bottom: 1px solid var(--border-color) !important;
+      background: var(--bg-main) !important;
+    }
+
+    .ckeditor-container .ck-button {
+      color: var(--text-primary) !important;
+    }
+
+    .btn-modal-submit {
+      width: 100%;
+      padding: 0.9rem;
+      background: var(--primary-gradient);
+      border: none;
+      border-radius: var(--radius-md);
+      font-weight: 700;
+      font-size: 1rem;
+      color: #FFFFFF;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      transition: var(--transition);
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(101, 163, 13, 0.25);
+      font-family: var(--font);
+      margin-top: 0.5rem;
+    }
+
+    .btn-modal-submit:hover:not(:disabled) {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(101, 163, 13, 0.35);
+    }
+
+    .btn-modal-submit:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .btn-modal-submit.loading .btn-text {
+      display: none;
+    }
+    .btn-modal-submit.loading .spinner {
+      display: inline-block;
+    }
+
+    .spinner {
+      display: none;
+      width: 1.2rem;
+      height: 1.2rem;
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      border-top: 3px solid #FFFFFF;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .message-box {
+      margin-top: 1.2rem;
+      padding: 0.9rem 1rem;
+      border-radius: var(--radius-md);
+      font-weight: 500;
+      font-size: 0.9rem;
+      display: none;
+      align-items: center;
+      gap: 0.6rem;
+      border-left: 4px solid;
+    }
+
+    .message-box.error {
+      display: flex;
+      border-left-color: #DC2626;
+      background: #FEF2F2;
+      color: #991B1B;
+    }
+
+    .message-box.success {
+      display: flex;
+      border-left-color: var(--primary);
+      background: #F7FEE7;
+      color: var(--primary-dark);
+    }
+
+    .message-box .material-icons-round {
+      font-size: 1.2rem;
+    }
+
+    .message-box.hidden {
+      display: none !important;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 900px) {
+      .about-grid {
+        grid-template-columns: 1fr 220px;
+        gap: 1.5rem;
+      }
+      .profile-avatar-wrapper {
+        max-width: 220px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .about-container {
+        padding: 1.5rem 1.2rem;
+        border-radius: var(--radius-lg);
+      }
+
+      .about-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.8rem;
+      }
+
+      .header-actions {
+        width: 100%;
+      }
+
+      .btn-add-about {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .about-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .profile-section {
+        order: -1;
+        padding: 1rem;
+        background: var(--bg-main);
+        border-radius: var(--radius-md);
+        border: 1px solid var(--border-color);
+      }
+
+      .profile-avatar-wrapper {
+        max-width: 200px;
+        margin: 0 auto;
+        border-radius: var(--radius-md);
+      }
+
+      .profile-name {
+        font-size: 1rem;
+      }
+
+      .modal-content {
+        padding: 1.5rem 1.2rem 2rem;
+        border-radius: var(--radius-lg);
+        max-height: 95vh;
+      }
+
+      .about-actions {
+        flex-direction: column;
+      }
+
+      .btn-about-action {
+        justify-content: center;
+      }
+
+      .ckeditor-container .ck-editor__editable {
+        min-height: 180px;
+        max-height: 300px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .about-container {
+        padding: 1rem 0.8rem;
+        border-radius: var(--radius-md);
+      }
+
+      .about-grid {
+        gap: 1.5rem;
+      }
+
+      .brand h1 {
+        font-size: 1.2rem;
+      }
+
+      .brand .material-icons-round {
+        width: 36px;
+        height: 36px;
+        font-size: 1.2rem;
+      }
+
+      .profile-section {
+        padding: 0.8rem;
+      }
+
+      .profile-avatar-wrapper {
+        max-width: 150px;
+        border-radius: var(--radius-sm);
+      }
+
+      .profile-avatar-wrapper .avatar-placeholder .material-icons-round {
+        font-size: 3rem;
+      }
+
+      .profile-name {
+        font-size: 0.95rem;
+      }
+
+      .profile-role {
+        font-size: 0.75rem;
+      }
+
+      .about-text {
+        font-size: 0.9rem;
+        line-height: 1.6;
+      }
+
+      .modal-content {
+        padding: 1rem 0.8rem 1.5rem;
+        border-radius: var(--radius-md);
+      }
+
+      .modal-title {
+        font-size: 1.1rem;
+      }
+
+      .modal-subtitle {
+        font-size: 0.8rem;
+        margin-bottom: 1.2rem;
+      }
+
+      .btn-modal-submit {
+        padding: 0.7rem;
+        font-size: 0.9rem;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .profile-avatar-wrapper {
+        max-width: 120px;
+      }
+
+      .profile-name {
+        font-size: 0.85rem;
+      }
+
+      .brand h1 {
+        font-size: 1rem;
+      }
+
+      .brand .material-icons-round {
+        width: 32px;
+        height: 32px;
+        font-size: 1rem;
+      }
+
+      .about-container {
+        padding: 0.8rem 0.5rem;
+      }
+
+      .profile-section {
+        padding: 0.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="about-container">
+  <!-- Header -->
+  <div class="about-header">
+    <div class="brand">
+      <span class="material-icons-round">person</span>
+      <h1>About</h1>
+    </div>
+    <div class="header-actions">
+      <button class="btn-add-about hidden" id="openAddModal">
+        <span class="material-icons-round">add</span>
+        Add About Me
+      </button>
+    </div>
+  </div>
+
+  <!-- Two Column Grid -->
+  <div class="about-grid">
+    <!-- Left Column - About Content -->
+    <div class="about-content">
+      <div id="aboutText" class="about-text empty">
+        Loading about me information...
+      </div>
+
+      <!-- About Actions (Update & Delete) - Hidden by default -->
+      <div class="about-actions hidden" id="aboutActions">
+        <button class="btn-about-action btn-edit" id="openEditModal">
+          <span class="material-icons-round">edit</span>
+          Update
+        </button>
+        <button class="btn-about-action btn-delete" id="deleteAboutBtn">
+          <span class="material-icons-round">delete</span>
+          Delete
+        </button>
+      </div>
+    </div>
+
+    <!-- Right Column - Profile Picture -->
+    <div class="profile-section">
+      <div class="profile-avatar-wrapper" id="profileAvatar">
+        <div class="avatar-placeholder" id="avatarPlaceholder">
+          <span class="material-icons-round">person</span>
+          <span>No Photo</span>
+        </div>
+        <div class="avatar-overlay" id="avatarUploadOverlay" style="display: none;">
+          <span class="material-icons-round">photo_camera</span>
+          <span class="overlay-text">Upload Photo</span>
+        </div>
+      </div>
+      <div class="profile-name" id="profileName">Guest User</div>
+      <div class="profile-role" id="profileRole">Viewing as guest</div>
+    </div>
+  </div>
+
+  <!-- Status Bar -->
+  <div class="status-bar">
+    <div class="status">
+      <span class="material-icons-round" id="statusIcon">info</span>
+      <span id="statusText">Loading...</span>
+    </div>
+  </div>
+</div>
+
+<!-- ========== ADD/EDIT MODAL ========== -->
+<div class="modal-overlay" id="aboutModal">
+  <div class="modal-content">
+    <button class="modal-close" id="closeModal">
+      <span class="material-icons-round">close</span>
+    </button>
+
+    <h2 class="modal-title" id="modalTitle">Add About Me</h2>
+    <p class="modal-subtitle" id="modalSubtitle">Share your story with the world</p>
+
+    <form id="aboutForm" novalidate>
+      <input type="hidden" id="aboutMeId" name="about_me_id_" value="" />
+      
+      <div class="modal-form-group">
+        <label for="descriptionInput">
+          <span class="material-icons-round">description</span>
+          Description
+        </label>
+        <div class="ckeditor-container">
+          <textarea 
+            id="descriptionInput" 
+            name="personal_description"
+            placeholder="Tell us about yourself..."
+          ></textarea>
+        </div>
+      </div>
+
+      <button type="submit" class="btn-modal-submit" id="modalSubmitBtn">
+        <span class="btn-text">Save</span>
+        <span class="spinner"></span>
+      </button>
+    </form>
+
+    <div id="modalMessage" class="message-box hidden">
+      <span class="material-icons-round">info</span>
+      <span id="modalMessageText"></span>
+    </div>
+  </div>
+</div>
+
+<!-- ========== FILE INPUT (hidden) ========== -->
+<input type="file" id="avatarFileInput" class="file-input-hidden" accept="image/*" />
+
+<script>
+  (function() {
+    // Get is_authenticated from template variable
+    const isAuthenticated = {{ is_authenticated | tojson | safe }};
+    
+    // DOM Elements
+    const aboutText = document.getElementById('aboutText');
+    const aboutActions = document.getElementById('aboutActions');
+    const statusText = document.getElementById('statusText');
+    const statusIcon = document.getElementById('statusIcon');
+    const deleteBtn = document.getElementById('deleteAboutBtn');
+    const openAddBtn = document.getElementById('openAddModal');
+    const openEditBtn = document.getElementById('openEditModal');
+    const profileAvatar = document.getElementById('profileAvatar');
+    const avatarPlaceholder = document.getElementById('avatarPlaceholder');
+    const avatarUploadOverlay = document.getElementById('avatarUploadOverlay');
+    const profileName = document.getElementById('profileName');
+    const profileRole = document.getElementById('profileRole');
+    const avatarFileInput = document.getElementById('avatarFileInput');
+
+    // Modal Elements
+    const modal = document.getElementById('aboutModal');
+    const closeModalBtn = document.getElementById('closeModal');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalSubtitle = document.getElementById('modalSubtitle');
+    const aboutForm = document.getElementById('aboutForm');
+    const descriptionTextarea = document.getElementById('descriptionInput');
+    const aboutMeIdInput = document.getElementById('aboutMeId');
+    const modalSubmitBtn = document.getElementById('modalSubmitBtn');
+    const modalMessage = document.getElementById('modalMessage');
+    const modalMessageText = document.getElementById('modalMessageText');
+
+    // State
+    let currentAboutMe = null;
+    let isEditMode = false;
+    let hasExistingRecord = false;
+    let editor = null;
+    let profilePhotoUrl = null;
+
+    // ========== UPDATE BUTTON VISIBILITY ==========
+    function updateButtonVisibility() {
+      if (!isAuthenticated) {
+        openAddBtn.classList.add('hidden');
+        aboutActions.classList.add('hidden');
+        avatarUploadOverlay.style.display = 'none';
+        profileRole.textContent = 'Viewing as guest';
+        return;
+      }
+
+      profileRole.textContent = 'Administrator';
+      avatarUploadOverlay.style.display = 'flex';
+
+      if (hasExistingRecord) {
+        openAddBtn.classList.add('hidden');
+        aboutActions.classList.remove('hidden');
+      } else {
+        openAddBtn.classList.remove('hidden');
+        aboutActions.classList.add('hidden');
+      }
+    }
+
+    // ========== LOAD PROFILE PHOTO FROM DATABASE ==========
+    async function loadProfilePhoto() {
+      const container = document.getElementById('profileAvatar');
+      
+      try {
+        console.log('🔄 Loading profile photo from database...');
+        
+        // Fetch the profile photo from the database endpoint
+        const response = await fetch('/profile/photo');
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        // Check if the response is an image (successful) or JSON (error)
+        const contentType = response.headers.get('content-type');
+        
+        if (contentType && contentType.startsWith('image/')) {
+          // Success - image data received
+          const blob = await response.blob();
+          const imageUrl = URL.createObjectURL(blob);
+          
+          console.log('✅ Profile photo loaded successfully from database');
+          profilePhotoUrl = imageUrl;
+          
+          // Display the image - fills the entire container
+          container.innerHTML = `
+            <img src="${imageUrl}" alt="Profile" />
+            <div class="avatar-overlay" id="avatarUploadOverlay">
+              <span class="material-icons-round">photo_camera</span>
+              <span class="overlay-text">Upload Photo</span>
+            </div>
+          `;
+          
+          document.getElementById('avatarUploadOverlay').addEventListener('click', () => avatarFileInput.click());
+          statusText.textContent = 'Profile photo loaded';
+          statusIcon.textContent = 'check_circle';
+          statusIcon.style.color = 'var(--primary)';
+          
+        } else {
+          // No profile photo found or error response
+          console.log('ℹ️ No profile photo found in database');
+          
+          // Show placeholder
+          container.innerHTML = `
+            <div class="avatar-placeholder" id="avatarPlaceholder">
+              <span class="material-icons-round">person</span>
+              <span>No Photo</span>
+            </div>
+            <div class="avatar-overlay" id="avatarUploadOverlay">
+              <span class="material-icons-round">photo_camera</span>
+              <span class="overlay-text">Upload Photo</span>
+            </div>
+          `;
+          
+          document.getElementById('avatarUploadOverlay').addEventListener('click', () => avatarFileInput.click());
+          statusText.textContent = 'No profile photo found';
+          statusIcon.textContent = 'info';
+          statusIcon.style.color = 'var(--text-muted)';
+        }
+        
+      } catch (error) {
+        console.error('❌ Error loading profile photo:', error);
+        
+        // Show placeholder with error
+        container.innerHTML = `
+          <div class="avatar-placeholder" id="avatarPlaceholder">
+            <span class="material-icons-round">person</span>
+            <span>No Photo</span>
+          </div>
+          <div class="avatar-overlay" id="avatarUploadOverlay">
+            <span class="material-icons-round">photo_camera</span>
+            <span class="overlay-text">Upload Photo</span>
+          </div>
+        `;
+        
+        document.getElementById('avatarUploadOverlay').addEventListener('click', () => avatarFileInput.click());
+        statusText.textContent = 'Failed to load profile photo';
+        statusIcon.textContent = 'error';
+        statusIcon.style.color = '#DC2626';
+      }
+    }
+
+    // ========== FETCH USER INFO ==========
+    async function fetchUserInfo() {
+      try {
+        console.log('🔄 Fetching user info...');
+        const response = await fetch('/user/info');
+        const data = await response.json();
+
+        console.log('📦 User info response:', data);
+
+        if (data.success && data.response) {
+          const user = data.response;
+          profileName.textContent = user.user_name || 'User';
+          profileRole.textContent = isAuthenticated ? 'Administrator' : 'Viewing as guest';
+          
+          console.log('👤 User data:', user);
+        } else {
+          console.warn('⚠️ No user info found');
+        }
+      } catch (error) {
+        console.error('❌ Error fetching user info:', error);
+      }
+    }
+
+    // ========== CKEDITOR INITIALIZATION ==========
+    async function initEditor(content = '') {
+      if (editor) {
+        await editor.destroy();
+        editor = null;
+      }
+
+      try {
+        editor = await ClassicEditor.create(descriptionTextarea, {
+          toolbar: {
+            items: [
+              'heading',
+              '|',
+              'bold',
+              'italic',
+              'underline',
+              'strikethrough',
+              '|',
+              'bulletedList',
+              'numberedList',
+              '|',
+              'link',
+              'blockQuote',
+              'insertTable',
+              '|',
+              'undo',
+              'redo'
+            ]
+          },
+          heading: {
+            options: [
+              { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
+              { model: 'heading1', view: 'h1', title: 'Heading 1', class: 'ck-heading_heading1' },
+              { model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2' },
+              { model: 'heading3', view: 'h3', title: 'Heading 3', class: 'ck-heading_heading3' }
+            ]
+          },
+          language: 'en',
+          licenseKey: 'GPL'
+        });
+
+        if (content) {
+          editor.setData(content);
+        }
+
+        console.log('✅ CKEditor initialized successfully');
+      } catch (error) {
+        console.error('❌ CKEditor initialization error:', error);
+        descriptionTextarea.style.display = 'block';
+        descriptionTextarea.value = content || '';
+      }
+    }
+
+    // ========== FETCH ABOUT ME ==========
+    async function fetchAboutMe() {
+      try {
+        console.log('🔄 Fetching about me...');
+        const response = await fetch('/get/about_me', {
+          method: 'POST',
+        });
+
+        const data = await response.json();
+
+        console.log('📦 About me response:', data);
+
+        if (data.success && data.about_me_description) {
+          currentAboutMe = data.about_me_description;
+          const description = currentAboutMe.about_me_description || '';
+          
+          hasExistingRecord = description.trim() !== '';
+          
+          if (hasExistingRecord) {
+            aboutText.innerHTML = description;
+            aboutText.className = 'about-text';
+          } else {
+            aboutText.textContent = 'No about me information available.';
+            aboutText.className = 'about-text empty';
+          }
+
+          updateButtonVisibility();
+
+          if (isAuthenticated) {
+            statusText.textContent = hasExistingRecord ? 'You can edit this content' : 'Add your about me information';
+            statusIcon.textContent = 'lock_open';
+            statusIcon.style.color = 'var(--primary)';
+          } else {
+            statusText.textContent = 'Viewing as guest';
+            statusIcon.textContent = 'visibility';
+            statusIcon.style.color = 'var(--text-muted)';
+          }
+
+        } else {
+          console.log('ℹ️ No about me content found');
+          hasExistingRecord = false;
+          aboutText.textContent = 'No about me information available.';
+          aboutText.className = 'about-text empty';
+          
+          if (isAuthenticated) {
+            statusText.textContent = 'Add your about me information';
+            statusIcon.textContent = 'lock_open';
+            statusIcon.style.color = 'var(--primary)';
+          } else {
+            statusText.textContent = 'Viewing as guest';
+            statusIcon.textContent = 'visibility';
+            statusIcon.style.color = 'var(--text-muted)';
+          }
+          
+          updateButtonVisibility();
+        }
+      } catch (error) {
+        console.error('❌ Error fetching about me:', error);
+        aboutText.textContent = 'An error occurred while loading.';
+        aboutText.className = 'about-text empty';
+        statusText.textContent = 'Error';
+        statusIcon.textContent = 'error';
+        statusIcon.style.color = '#DC2626';
+        
+        openAddBtn.classList.add('hidden');
+        aboutActions.classList.add('hidden');
+      }
+    }
+
+    // ========== MODAL CONTROLS ==========
+    async function openModal(mode = 'add', data = null) {
+      if (!isAuthenticated) {
+        alert('You must be logged in to perform this action.');
+        return;
+      }
+
+      isEditMode = mode === 'edit';
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+      
+      hideModalMessage();
+      modalSubmitBtn.classList.remove('loading');
+      modalSubmitBtn.disabled = false;
+
+      if (isEditMode && data) {
+        modalTitle.textContent = 'Update About Me';
+        modalSubtitle.textContent = 'Edit your personal story';
+        aboutMeIdInput.value = data.about_me_description_id || '';
+        await initEditor(data.about_me_description || '');
+      } else {
+        modalTitle.textContent = 'Add About Me';
+        modalSubtitle.textContent = 'Share your story with the world';
+        aboutMeIdInput.value = '';
+        await initEditor('');
+      }
+
+      setTimeout(() => {
+        if (editor) {
+          editor.editing.view.focus();
+        }
+      }, 200);
+    }
+
+    function closeModal() {
+      modal.classList.remove('active');
+      document.body.style.overflow = '';
+      hideModalMessage();
+      modalSubmitBtn.classList.remove('loading');
+      modalSubmitBtn.disabled = false;
+      
+      if (editor) {
+        editor.destroy().then(() => {
+          editor = null;
+        }).catch(() => {});
+      }
+    }
+
+    openAddBtn.addEventListener('click', function(e) {
+      if (!isAuthenticated) {
+        alert('Please log in to add about me information.');
+        return;
+      }
+      openModal('add');
+    });
+
+    openEditBtn.addEventListener('click', function(e) {
+      if (!isAuthenticated) {
+        alert('Please log in to update about me information.');
+        return;
+      }
+      if (currentAboutMe && hasExistingRecord) {
+        openModal('edit', currentAboutMe);
+      } else {
+        alert('No about me record to update.');
+      }
+    });
+
+    closeModalBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', function(e) {
+      if (e.target === modal) closeModal();
+    });
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && modal.classList.contains('active')) {
+        closeModal();
+      }
+    });
+
+    // ========== MODAL MESSAGES ==========
+    function showModalMessage(text, type = 'error') {
+      modalMessage.className = `message-box ${type}`;
+      modalMessageText.textContent = text;
+      modalMessage.style.display = 'flex';
+    }
+
+    function hideModalMessage() {
+      modalMessage.className = 'message-box hidden';
+      modalMessage.style.display = 'none';
+    }
+
+    function setModalLoading(loading) {
+      if (loading) {
+        modalSubmitBtn.classList.add('loading');
+        modalSubmitBtn.disabled = true;
+      } else {
+        modalSubmitBtn.classList.remove('loading');
+        modalSubmitBtn.disabled = false;
+      }
+    }
+
+    function getEditorContent() {
+      if (editor) {
+        return editor.getData();
+      }
+      return descriptionTextarea.value;
+    }
+
+    // ========== HANDLE FORM SUBMISSION ==========
+    aboutForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      hideModalMessage();
+
+      if (!isAuthenticated) {
+        showModalMessage('You must be logged in to perform this action.', 'error');
+        return;
+      }
+
+      const description = getEditorContent().trim();
+      
+      if (!description || description === '<p>&nbsp;</p>' || description === '<p><br></p>') {
+        showModalMessage('Please type something in the description area.', 'error');
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append('personal_description', description);
+      
+      if (isEditMode) {
+        const aboutMeId = aboutMeIdInput.value;
+        if (!aboutMeId) {
+          showModalMessage('An error occurred. Please try again.', 'error');
+          return;
+        }
+        formData.append('about_me_id_', aboutMeId);
+      }
+
+      const endpoint = isEditMode ? '/update/personal_description' : '/record/personal_description';
+
+      setModalLoading(true);
+
+      try {
+        const response = await fetch(endpoint, {
+          method: 'POST',
+          body: formData,
+        });
+
+        let data;
+        try {
+          data = await response.json();
+        } catch (_) {
+          throw new Error('Server responded with invalid JSON.');
+        }
+
+        if (response.ok && data.success) {
+          showModalMessage(data.message || 'Saved successfully!', 'success');
+          
+          setTimeout(() => {
+            fetchAboutMe();
+            fetchUserInfo();
+            // Reload profile photo after update
+            loadProfilePhoto();
+            closeModal();
+          }, 800);
+        } else {
+          const errorMsg = data.message || data.msg || 'An error occurred. Please try again.';
+          showModalMessage(errorMsg, 'error');
+        }
+      } catch (error) {
+        console.error('Form submission error:', error);
+        showModalMessage('Network error. Please try again later.', 'error');
+      } finally {
+        setModalLoading(false);
+      }
+    });
+
+    // ========== DELETE ABOUT ME ==========
+    deleteBtn.addEventListener('click', async function() {
+      if (!isAuthenticated) {
+        alert('You must be logged in to delete about me information.');
+        return;
+      }
+
+      if (!currentAboutMe || !currentAboutMe.about_me_description_id) {
+        alert('No about me record to delete.');
+        return;
+      }
+
+      if (!confirm('Are you sure you want to delete your about me description? This action cannot be undone.')) {
+        return;
+      }
+
+      try {
+        const response = await fetch(`/delete/about_me/${currentAboutMe.about_me_description_id}`, {
+          method: 'GET',
+        });
+
+        let data;
+        try {
+          data = await response.json();
+        } catch (_) {
+          throw new Error('Server responded with invalid JSON.');
+        }
+
+        if (response.ok && data.success) {
+          await fetchAboutMe();
+          aboutText.textContent = 'About me deleted successfully.';
+          aboutText.className = 'about-text empty';
+          
+          currentAboutMe = null;
+          hasExistingRecord = false;
+          updateButtonVisibility();
+          
+          statusText.textContent = 'Deleted successfully';
+          statusIcon.textContent = 'check_circle';
+          statusIcon.style.color = 'var(--primary)';
+          
+          setTimeout(() => {
+            statusText.textContent = 'No about me information available';
+            statusIcon.textContent = 'info';
+            statusIcon.style.color = 'var(--text-muted)';
+          }, 3000);
+        } else {
+          const errorMsg = data.message || 'Failed to delete. Please try again.';
+          alert(errorMsg);
+        }
+      } catch (error) {
+        console.error('Delete error:', error);
+        alert('Network error. Please try again later.');
+      }
+    });
+
+    // ========== AVATAR UPLOAD ==========
+    avatarUploadOverlay.addEventListener('click', () => {
+      if (isAuthenticated) {
+        avatarFileInput.click();
+      }
+    });
+
+    avatarFileInput.addEventListener('change', async function() {
+      const file = this.files[0];
+      if (!file) return;
+
+      const formData = new FormData();
+      formData.append('file', file);
+
+      try {
+        const response = await fetch('/update/account_info/profile_photo', { 
+          method: 'POST', 
+          body: formData 
+        });
+        const data = await response.json();
+
+        if (response.ok && data.success) {
+          statusText.textContent = 'Avatar uploaded!';
+          statusIcon.textContent = 'check_circle';
+          statusIcon.style.color = 'var(--primary)';
+          
+          // Reload the profile photo from database
+          await loadProfilePhoto();
+          await fetchUserInfo();
+          await fetchAboutMe();
+          
+          setTimeout(() => {
+            statusText.textContent = hasExistingRecord ? 'You can edit this content' : 'Add your about me information';
+            statusIcon.textContent = 'lock_open';
+            statusIcon.style.color = 'var(--primary)';
+          }, 3000);
+        } else {
+          alert(data.message || 'Failed to update photo.');
+        }
+      } catch (error) {
+        console.error('Upload error:', error);
+        alert('Network error. Please try again.');
+      }
+    });
+
+    // ========== CLEANUP OBJECT URL ON UNLOAD ==========
+    window.addEventListener('beforeunload', function() {
+      if (profilePhotoUrl) {
+        URL.revokeObjectURL(profilePhotoUrl);
+      }
+    });
+
+    // ========== INITIAL LOAD ==========
+    console.log('🚀 About Me page initializing...');
+    console.log('🔐 isAuthenticated:', isAuthenticated);
+    
+    // Load profile photo from database first
+    loadProfilePhoto();
+    
+    // Then load user info and about me content
+    fetchUserInfo();
+    fetchAboutMe();
+
+    console.log('✅ About Me page ready');
+  })();
+</script>
+
+</body>
+</html>
