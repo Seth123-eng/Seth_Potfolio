@@ -17,7 +17,7 @@ from dotenv import load_dotenv
 
 load_dotenv(override=True)
 
-#gunicorn -k uvicorn.workers.UvicornWorker -w 1 --bind 0.0.0.0:5000 app_factory:web_app
+#gunicorn -k uvicorn.workers.UvicornWorker -w 1 --bind 0.0.0.0:5000 asgi_app_expose:app
 
 
 class WebApp():

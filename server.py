@@ -23,20 +23,18 @@ Host=os.getenv("Host", "").strip()
 async def startup():
 
     await register_all_blueprints()
-    
-    async with web_app.app_context():
         
-        async with engine.begin() as conn:
+    async with engine.begin() as conn:
+        
+        try:
             
-            try:
-                
-                await conn.run_sync(Base.metadata.create_all)
-                #await conn.run_sync(Base.metadata.reflect(bind=engine))
-                #await conn.run_sync(Base.metadata.drop_all)
-                print("Database Tables Created")
-                
-            except Exception as e:
-                print(f"EXCEPTION = {e}")
+            await conn.run_sync(Base.metadata.create_all)
+            #await conn.run_sync(Base.metadata.reflect(bind=engine))
+            #await conn.run_sync(Base.metadata.drop_all)
+            print("Database Tables Created")
+            
+        except Exception as e:
+            print(f"EXCEPTION = {e}")
 
 
 @web_app.after_request
