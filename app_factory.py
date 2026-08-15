@@ -6,7 +6,6 @@ from quart import Quart, request
 from quart_auth import QuartAuth
 from quart_cors import cors
 from quart_bcrypt import Bcrypt
-from quart_rate_limiter import RateLimiter
 
 from helpers.make_sio_server import sio_server
 
@@ -19,12 +18,6 @@ from dotenv import load_dotenv
 load_dotenv(override=True)
 
 #gunicorn -k uvicorn.workers.UvicornWorker -w 1 --bind 127.0.0.1:5000 app_factory:web_app._sio_app
-
-def get_client_ip():
-    x_forwarded_for = request.headers.get("X-Forwarded-For")
-    if x_forwarded_for:
-        return x_forwarded_for.split(",")[0].strip()
-    return request.remote_addr
 
 
 class WebApp():
@@ -47,9 +40,6 @@ class WebApp():
         
         self.quart_auth_manager=QuartAuth()
         self.quart_auth_manager.init_app(self._quart_app)
-        
-        self.limiter=RateLimiter(key_function=get_client_ip)
-        self.limiter.init_app(self._quart_app)
         
         self.register_blueprint=self._quart_app.register_blueprint
         self.route=self._quart_app.route  
