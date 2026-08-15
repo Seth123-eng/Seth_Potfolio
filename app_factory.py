@@ -17,7 +17,7 @@ from dotenv import load_dotenv
 
 load_dotenv(override=True)
 
-#gunicorn -k uvicorn.workers.UvicornWorker -w 1 --bind 127.0.0.1:5000 app_factory:web_app._sio_app
+#gunicorn -k uvicorn.workers.UvicornWorker -w 1 --bind 0.0.0.0:5000 app_factory:web_app
 
 
 class WebApp():
