@@ -16,7 +16,13 @@ class Base(DeclarativeBase):
 
 engine=create_async_engine(
     url=os.getenv("DATABASE_URI", "").strip(),
-    echo=False
+    echo=False,
+    pool_size=5,
+    max_overflow=10,
+    pool_pre_ping=True,
+    pool_recycle=3600,
+    # Important: Disable connection pooling for asyncpg to avoid concurrency issues
+    pool_use_lifo=True,
 )
 
 
