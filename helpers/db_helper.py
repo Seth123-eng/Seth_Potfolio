@@ -23,6 +23,12 @@ engine=create_async_engine(
     pool_recycle=3600,
     # Important: Disable connection pooling for asyncpg to avoid concurrency issues
     pool_use_lifo=True,
+    connect_args={
+        "statement_cache_size": 0,  # Disable prepared statements for PgBouncer
+        "server_settings": {
+            "client_encoding": "utf8",
+        }
+    }
 )
 
 
