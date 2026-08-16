@@ -3,6 +3,7 @@ from helpers.blueprint_registration import register_all_blueprints
 import asyncio
 
 # Register blueprints before serving
+@web_app.before_serving
 async def register():
     await register_all_blueprints()
 
@@ -27,16 +28,6 @@ def add_no_cache_headers(response):
     response.headers["Pragma"] = "no-cache"
     response.headers["Expires"] = "0"
     return response
-
-# Run the registration
-try:
-    loop = asyncio.new_event_loop()
-    asyncio.set_event_loop(loop)
-    loop.run_until_complete(register())
-    loop.close()
-    print("Blueprints registered successfully")
-except Exception as e:
-    print(f"Error registering blueprints: {e}")
 
 # Expose the ASGI app
 app = web_app._sio_app
