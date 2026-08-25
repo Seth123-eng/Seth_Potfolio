@@ -7,7 +7,9 @@ import os
 
 from dotenv import load_dotenv
 
-load_dotenv(override=True)
+load_dotenv(override=True)      
+
+from sqlalchemy.pool import NullPool
 
 
 class Base(DeclarativeBase):
@@ -20,6 +22,7 @@ engine=create_async_engine(
     pool_size=5,
     max_overflow=10,
     pool_pre_ping=True,
+    #poolclass=NullPool,  # Disable pooling
     pool_recycle=3600,
     # Important: Disable connection pooling for asyncpg to avoid concurrency issues
     pool_use_lifo=True,
@@ -28,7 +31,7 @@ engine=create_async_engine(
         "server_settings": {
             "client_encoding": "utf8",
         }
-    }
+    } 
 )
 
 

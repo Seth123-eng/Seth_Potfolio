@@ -193,6 +193,12 @@ async def update_account_info():
 @login_required
 async def update_profile_photo():
 
+    if not current_user.auth_id:
+        return jsonify({
+            "success" : True,
+            "message" : "Not authorized to perform this operation"
+        })
+
     file = (await request.files).get("file")
 
     if not file:
@@ -227,7 +233,7 @@ async def update_profile_photo():
                         is_profile=True,
                         file_data=file_data,
                         date_time=current_time,
-                        user_id = int(current_user.auth_id) #type:ignore
+                        user_id = int(current_user.auth_id)
                     )
                 )
 

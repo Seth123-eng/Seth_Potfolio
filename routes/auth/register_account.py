@@ -5,13 +5,11 @@ from quart import (
 
 
 from models.user_model import UserTable
-from models.file_model import FileTable
 
 from helpers.db_helper import make_session
 from helpers.date_helper import get_current_time
 from helpers.web_security import (
-    password_maker,
-    encode_with_itsdangerous
+    password_maker
 )
 
 from sqlalchemy import select
