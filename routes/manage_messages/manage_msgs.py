@@ -146,7 +146,7 @@ async def msg_reply_to_email(msg_id_):
 
                 return jsonify({
                     "success" : True,
-                    "message" : rslt
+                    "message" : "Email sending Failed"
                 })
 
         except Exception as e:
