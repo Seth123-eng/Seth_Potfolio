@@ -25,7 +25,7 @@ MAIL_PASSWORD = os.getenv("MAIL_PASSWORD", "").strip()
 async def send_email_msg(
         email:str, reason:str, link:str|None=None, max_retries:int=3,
         user_name:str|None=None, msg:str|None=None
-) -> None:
+) -> None|str:
 
     """
     emails sending reasons:\n
@@ -79,13 +79,17 @@ async def send_email_msg(
             )
             print("Email sent successfully.")
 
-            return
+            return "Ok"
         except Exception as e:
             if retry == max_retries - 1:
 
                 print(f"Error sending email after {max_retries} retries")
                 print(f"Error = {e}")
+
+                return f"Error sending email after {max_retries} retries"
             else:
                 print(f"Error sending email. Retrying... ({retry + 1}/{max_retries})")
                 print(f"Error = {e}")
                 await asyncio.sleep(2**retry)  # Exponential backoff
+
+                return f"Error sending email. Retrying... ({retry + 1}/{max_retries})"

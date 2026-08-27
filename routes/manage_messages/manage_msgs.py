@@ -127,19 +127,26 @@ async def msg_reply_to_email(msg_id_):
             msg_record = await sess.get(MessageTable, int(msg_id))
 
             if msg_record:
-                msg_record.message_replied = True
-                msg_record.is_read = True
-                await sess.commit()
-
-                await send_email_msg(
+                rslt = await send_email_msg(
                     email=msg_record.email,
                     reason="send_reply_email",
                     msg=reply_content
                 )
 
+                if rslt == "Ok":
+
+                    msg_record.message_replied = True
+                    msg_record.is_read = True
+                    await sess.commit()
+
+                    return jsonify({
+                        "success" : True,
+                        "message" : "replied to client message"
+                    })
+
                 return jsonify({
                     "success" : True,
-                    "message" : "replied to client message"
+                    "message" : rslt
                 })
 
         except Exception as e:
