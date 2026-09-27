@@ -575,7 +575,7 @@
       const container = document.getElementById('profileAvatar');
       
       try {
-        console.log('🔄 Loading profile photo from database...');
+        //console.log('🔄 Loading profile photo from database...');
         
         const response = await fetch('/profile/photo');
         
@@ -589,7 +589,7 @@
           const blob = await response.blob();
           const imageUrl = URL.createObjectURL(blob);
           
-          console.log('✅ Profile photo loaded successfully from database');
+          //console.log('✅ Profile photo loaded successfully from database');
           profilePhotoUrl = imageUrl;
           
           // Display the image
@@ -612,7 +612,7 @@
           
         } else {
           // No profile photo found
-          console.log('ℹ️ No profile photo found in database');
+          //console.log('ℹ️ No profile photo found in database');
           showPlaceholder();
           statusText.textContent = 'No profile photo';
           statusIcon.textContent = 'info';
@@ -668,7 +668,7 @@
         const response = await fetch('/user/info');
         const data = await response.json();
 
-        console.log('User info response:', data);
+        //console.log('User info response:', data);
 
         if (data.success && data.response) {
           const user = data.response;
@@ -929,7 +929,7 @@
     // ===== INITIAL LOAD =====
     fetchUserInfo();
 
-    console.log('Account page ready with database-based profile photo');
+    //console.log('Account page ready with database-based profile photo');
   })();
 </script>
 

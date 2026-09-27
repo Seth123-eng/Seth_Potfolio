@@ -11,8 +11,6 @@ from .prepare_html_file import prepare_html_file
 
 import os
 
-from typing import List
-
 from dotenv import load_dotenv
 
 load_dotenv(override=True)

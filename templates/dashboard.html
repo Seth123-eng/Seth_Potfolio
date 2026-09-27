@@ -111,6 +111,32 @@
       color: var(--primary);
     }
 
+    /* Mobile brand (hidden by default, shown in top-bar on mobile) */
+    .mobile-brand {
+      display: none;
+      align-items: center;
+      gap: 0.6rem;
+      text-decoration: none;
+    }
+
+    .mobile-brand .brand-icon {
+      width: 36px;
+      height: 36px;
+      font-size: 1.2rem;
+      border-radius: var(--radius-sm);
+    }
+
+    .mobile-brand .brand-text {
+      font-size: 1.1rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--text-primary);
+    }
+
+    .mobile-brand .brand-text span {
+      color: var(--primary);
+    }
+
     .sidebar-nav {
       flex: 1;
       display: flex;
@@ -463,6 +489,8 @@
       display: flex;
       align-items: center;
       gap: 1rem;
+      flex: 1;
+      min-width: 0;
     }
 
     .menu-toggle {
@@ -474,6 +502,8 @@
       padding: 0.3rem;
       border-radius: var(--radius-sm);
       transition: var(--transition);
+      order: 3;
+      margin-left: auto;
     }
 
     .menu-toggle:hover {
@@ -489,6 +519,9 @@
       font-size: 1.2rem;
       font-weight: 600;
       color: var(--text-primary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .page-title .page-sub {
@@ -501,6 +534,7 @@
       display: flex;
       align-items: center;
       gap: 0.8rem;
+      flex-shrink: 0;
     }
 
     .status-indicator {
@@ -968,14 +1002,40 @@
         margin-left: 0;
       }
 
+      /* Mobile brand shown in top bar */
+      .mobile-brand {
+        display: flex;
+      }
+
+      /* Hide the sidebar brand on mobile */
+      .sidebar .sidebar-brand {
+        display: none;
+      }
+
+      /* Hamburger on the far right */
       .menu-toggle {
         display: flex;
+        order: 3;
+        margin-left: auto;
+      }
+
+      .top-bar-left {
+        order: 1;
+      }
+
+      .top-bar-right {
+        order: 2;
+        margin-left: auto;
+        margin-right: 0.5rem;
       }
 
       .top-bar {
         padding: 0.7rem 1rem;
         min-height: 60px;
         background: rgba(255, 255, 255, 0.9);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
       }
 
       .page-title {
@@ -1067,6 +1127,16 @@
         font-size: 1.4rem;
       }
 
+      .mobile-brand .brand-icon {
+        width: 32px;
+        height: 32px;
+        font-size: 1rem;
+      }
+
+      .mobile-brand .brand-text {
+        font-size: 1rem;
+      }
+
       .iframe-wrapper {
         padding: 0.5rem 0.6rem 0.8rem;
       }
@@ -1133,9 +1203,9 @@
         </div>
       </div>
 
-      <button class="nav-item" data-url="/skill-set-page" data-page="skills">
+      <button class="nav-item" data-url="/skill-set-page" data-page="Expertise">
         <span class="material-icons-round">bolt</span>
-        Skills
+        Expertise
       </button>
 
       <!-- Contact Link - Hidden for logged in users -->
@@ -1179,9 +1249,13 @@
     <!-- Top Bar -->
     <header class="top-bar">
       <div class="top-bar-left">
-        <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
-          <span class="material-icons-round">menu</span>
-        </button>
+        <!-- Mobile brand (moved from sidebar) -->
+        <a href="#" class="mobile-brand" onclick="return false;">
+          <div class="brand-icon">
+            <span class="material-icons-round">dashboard</span>
+          </div>
+          <span class="brand-text">{{ first_name }}<span>{{ last_name }}</span></span>
+        </a>
         <div class="page-title">
           <span id="pageTitleText">Home</span>
           <span class="page-sub" id="pageSubText">/ Profile</span>
@@ -1193,6 +1267,10 @@
           <span id="statusText">Guest</span>
         </div>
       </div>
+      <!-- Hamburger menu icon (moved to far right on mobile) -->
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+        <span class="material-icons-round">menu</span>
+      </button>
     </header>
 
     <!-- Iframe -->
@@ -1487,7 +1565,7 @@
       let currentPage = 'about';
       const pageTitles = {
         about: { title: 'Home', sub: '/ Profile' },
-        skills: { title: 'Skills', sub: '/ Expertise' },
+        Expertise: { title: 'Expertise', sub: '/skills' },
         contact: { title: 'Contact', sub: '/ Get in Touch' },
         messages: { title: 'Messages', sub: '/ Inbox' },
         account: { title: 'Account', sub: '/ Settings' },
@@ -1861,7 +1939,7 @@
         stopMessagePolling();
       });
 
-      console.log('✨ Dashboard ready. isLoggedIn:', isLoggedIn);
+      //console.log('✨ Dashboard ready. isLoggedIn:', isLoggedIn);
     })();
   </script>
 </body>

@@ -217,15 +217,16 @@
       aspect-ratio: 1 / 1;
       border-radius: var(--radius-lg);
       overflow: hidden;
-      background: var(--bg-main);
-      border: 2px solid var(--border-color);
-      box-shadow: var(--shadow-sm);
+      background: transparent;
+      /* Border removed — image blends into parent */
+      border: none;
+      box-shadow: none;
       transition: var(--transition);
     }
 
     .profile-avatar-wrapper:hover {
-      box-shadow: var(--shadow-md);
-      border-color: var(--primary);
+      box-shadow: none;
+      border-color: transparent;
     }
 
     .profile-avatar-wrapper img {
@@ -233,6 +234,7 @@
       height: 100%;
       object-fit: cover;
       display: block;
+      border-radius: inherit;
     }
 
     .profile-avatar-wrapper .avatar-placeholder {
@@ -244,6 +246,7 @@
       justify-content: center;
       color: var(--text-muted);
       background: var(--bg-main);
+      border-radius: inherit;
     }
 
     .profile-avatar-wrapper .avatar-placeholder .material-icons-round {
@@ -267,6 +270,7 @@
       cursor: pointer;
       transition: var(--transition);
       backdrop-filter: blur(2px);
+      border-radius: inherit;
     }
 
     .profile-avatar-wrapper:hover .avatar-overlay {
@@ -662,10 +666,12 @@
         border: 1px solid var(--border-color);
       }
 
+      /* ── MOBILE: profile image fills the entire division ── */
       .profile-avatar-wrapper {
-        max-width: 200px;
-        margin: 0 auto;
+        max-width: 100%;
+        width: 100%;
         border-radius: var(--radius-md);
+        aspect-ratio: 1 / 1;
       }
 
       .profile-name {
@@ -716,8 +722,10 @@
         padding: 0.8rem;
       }
 
+      /* Keep full-width on small phones too */
       .profile-avatar-wrapper {
-        max-width: 150px;
+        max-width: 100%;
+        width: 100%;
         border-radius: var(--radius-sm);
       }
 
@@ -760,7 +768,8 @@
 
     @media (max-width: 380px) {
       .profile-avatar-wrapper {
-        max-width: 120px;
+        max-width: 100%;
+        width: 100%;
       }
 
       .profile-name {
@@ -960,8 +969,6 @@
       const container = document.getElementById('profileAvatar');
       
       try {
-        console.log('🔄 Loading profile photo from database...');
-        
         // Fetch the profile photo from the database endpoint
         const response = await fetch('/profile/photo');
         
@@ -977,7 +984,6 @@
           const blob = await response.blob();
           const imageUrl = URL.createObjectURL(blob);
           
-          console.log('✅ Profile photo loaded successfully from database');
           profilePhotoUrl = imageUrl;
           
           // Display the image - fills the entire container
@@ -995,8 +1001,6 @@
           statusIcon.style.color = 'var(--primary)';
           
         } else {
-          // No profile photo found or error response
-          console.log('ℹ️ No profile photo found in database');
           
           // Show placeholder
           container.innerHTML = `
@@ -1041,18 +1045,18 @@
     // ========== FETCH USER INFO ==========
     async function fetchUserInfo() {
       try {
-        console.log('🔄 Fetching user info...');
+        //console.log('🔄 Fetching user info...');
         const response = await fetch('/user/info');
         const data = await response.json();
 
-        console.log('📦 User info response:', data);
+        //console.log('📦 User info response:', data);
 
         if (data.success && data.response) {
           const user = data.response;
           profileName.textContent = user.user_name || 'User';
           profileRole.textContent = isAuthenticated ? 'Administrator' : 'Viewing as guest';
           
-          console.log('👤 User data:', user);
+          //console.log('👤 User data:', user);
         } else {
           console.warn('⚠️ No user info found');
         }
@@ -1106,7 +1110,7 @@
           editor.setData(content);
         }
 
-        console.log('✅ CKEditor initialized successfully');
+        //console.log('✅ CKEditor initialized successfully');
       } catch (error) {
         console.error('❌ CKEditor initialization error:', error);
         descriptionTextarea.style.display = 'block';
@@ -1117,14 +1121,14 @@
     // ========== FETCH ABOUT ME ==========
     async function fetchAboutMe() {
       try {
-        console.log('🔄 Fetching about me...');
+        //console.log('🔄 Fetching about me...');
         const response = await fetch('/get/about_me', {
           method: 'POST',
         });
 
         const data = await response.json();
 
-        console.log('📦 About me response:', data);
+        //console.log('📦 About me response:', data);
 
         if (data.success && data.about_me_description) {
           currentAboutMe = data.about_me_description;
@@ -1153,7 +1157,7 @@
           }
 
         } else {
-          console.log('ℹ️ No about me content found');
+          //console.log('ℹ️ No about me content found');
           hasExistingRecord = false;
           aboutText.textContent = 'No about me information available.';
           aboutText.className = 'about-text empty';
@@ -1467,8 +1471,8 @@
     });
 
     // ========== INITIAL LOAD ==========
-    console.log('🚀 About Me page initializing...');
-    console.log('🔐 isAuthenticated:', isAuthenticated);
+    //console.log('🚀 About Me page initializing...');
+    //console.log('🔐 isAuthenticated:', isAuthenticated);
     
     // Load profile photo from database first
     loadProfilePhoto();
@@ -1477,7 +1481,7 @@
     fetchUserInfo();
     fetchAboutMe();
 
-    console.log('✅ About Me page ready');
+    //console.log('✅ About Me page ready');
   })();
 </script>
 

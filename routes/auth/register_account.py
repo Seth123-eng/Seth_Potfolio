@@ -16,9 +16,16 @@ from sqlalchemy import select
 
 import bleach
 
+import os
+
+from dotenv import load_dotenv
+load_dotenv(override=True)
+
+ADMIN_EMAIL = os.getenv("ADMIN_EMAIL", "").strip()
+ADMIN_TOKEN = os.getenv("ADMIN_TOKEN", "").strip()
+
 
 create_account_bp = Blueprint("create_account_bp", __name__)
-
 
 
 @create_account_bp.route('/signup/page')
@@ -40,6 +47,18 @@ async def create_account():
         return jsonify({
             "success": False,
             "msg": "Please provide email and password."
+        })
+
+    if email != ADMIN_EMAIL:
+        return jsonify({
+            "success": False,
+            "msg": "Account creation is restricted by the site owner"
+        })
+
+    if password != ADMIN_TOKEN:
+        return jsonify({
+            "success": False,
+            "msg": "Invalid logins"
         })
     
     async with make_session() as sess:
